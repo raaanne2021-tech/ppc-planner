@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PPC Daily Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F8EDD9;
+    --cream-dark: #EFD9B4;
+    --card: #FFFBF3;
+    --espresso: #2C1A0E;
+    --brown: #6B3A1F;
+    --caramel: #C07830;
+    --caramel-light: #F0D4A0;
+    --sage: #7A8C6E;
+    --sage-light: #D8E4D0;
+    --muted: #9C7E62;
+    --border: #DEC99A;
+    --check-done: #A8B89A;
+  }
+
+  body {
+    background: var(--cream);
+    font-family: 'Nunito', sans-serif;
+    color: var(--espresso);
+    min-height: 100vh;
+    padding: 24px 20px 40px;
+    background-image:
+      radial-gradient(ellipse at 90% 5%, rgba(192,120,48,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 10% 80%, rgba(107,58,31,0.06) 0%, transparent 50%);
+  }
+
+  .wrapper {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 28px;
+    padding-bottom: 18px;
+    border-bottom: 1.5px solid var(--border);
+  }
+
+  .header-left .greeting {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--espresso);
+    line-height: 1.2;
+  }
+
+  .header-left .greeting em {
+    font-style: italic;
+    color: var(--brown);
+  }
+
+  .header-left .subtitle {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+
+  .header-right {
+    text-align: right;
+  }
+
+  .header-right .date-day {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  .header-right .date-full {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .ppc-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--caramel);
+    border: 1px solid var(--caramel-light);
+    background: rgba(240,212,160,0.35);
+    padding: 3px 8px;
+    border-radius: 20px;
+    margin-top: 6px;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: linear-gradient(to bottom, var(--caramel), var(--brown));
+    border-radius: 4px 0 0 4px;
+  }
+
+  .section.notes-section::before {
+    background: linear-gradient(to bottom, var(--sage), #4A6A3A);
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .section-label svg {
+    width: 14px; height: 14px;
+    opacity: 0.7;
+  }
+
+  /* ── FOCUS INPUT ── */
+  .focus-input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-style: italic;
+    color: var(--espresso);
+    outline: none;
+    resize: none;
+    line-height: 1.5;
+    caret-color: var(--caramel);
+  }
+
+  .focus-input::placeholder {
+    color: var(--cream-dark);
+    font-style: italic;
+  }
+
+  /* ── TASKS ── */
+  .task-add-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+    align-items: center;
+  }
+
+  .task-input {
+    flex: 1;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 13.5px;
+    color: var(--espresso);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .task-input:focus { border-color: var(--caramel); }
+  .task-input::placeholder { color: var(--cream-dark); }
+
+  .priority-select {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    color: var(--muted);
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .add-btn {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: var(--caramel);
+    color: #fff;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s, transform 0.1s;
+    font-weight: 300;
+  }
+
+  .add-btn:hover { background: var(--brown); }
+  .add-btn:active { transform: scale(0.93); }
+
+  /* task list */
+  .task-list { display: flex; flex-direction: column; gap: 6px; }
+
+  .task-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: 9px;
+    background: transparent;
+    transition: background 0.15s;
+    animation: slideIn 0.18s ease-out;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .task-item:hover { background: var(--cream); }
+
+  .task-cb {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+  }
+
+  .task-cb.checked {
+    background: var(--check-done);
+    border-color: var(--check-done);
+  }
+
+  .task-cb.checked::after {
+    content: '';
+    width: 5px; height: 9px;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(45deg) translate(-1px, -1px);
+    display: block;
+  }
+
+  .task-text {
+    flex: 1;
+    font-size: 13.5px;
+    color: var(--espresso);
+    line-height: 1.4;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .task-text.done {
+    text-decoration: line-through;
+    color: var(--muted);
+    opacity: 0.7;
+  }
+
+  .priority-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-right: 2px;
+  }
+
+  .dot-high { background: #C0533A; }
+  .dot-mid  { background: #C07830; }
+  .dot-low  { background: var(--sage); }
+
+  .del-btn {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--border);
+    font-size: 15px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0;
+    transition: opacity 0.15s, color 0.15s;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .task-item:hover .del-btn { opacity: 1; }
+  .del-btn:hover { color: #C0533A; }
+
+  .empty-state {
+    text-align: center;
+    padding: 20px 0 8px;
+    color: var(--cream-dark);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 14px;
+  }
+
+  /* progress bar */
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--border);
+  }
+
+  .progress-bar-bg {
+    flex: 1;
+    height: 5px;
+    background: var(--cream-dark);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--caramel), var(--brown));
+    border-radius: 10px;
+    transition: width 0.4s ease;
+  }
+
+  .progress-label {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 600;
+    min-width: 36px;
+    text-align: right;
+  }
+
+  /* ── NOTES ── */
+  .notes-textarea {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-family: 'Nunito', sans-serif;
+    font-size: 13.5px;
+    color: var(--espresso);
+    outline: none;
+    resize: none;
+    line-height: 1.8;
+    min-height: 90px;
+    caret-color: var(--sage);
+  }
+
+  .notes-textarea::placeholder { color: var(--cream-dark); }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    margin-top: 6px;
+    font-size: 10px;
+    color: var(--cream-dark);
+    letter-spacing: 0.06em;
+    font-weight: 400;
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="greeting" id="greeting">Good morning, <em>Rae</em></div>
+      <div class="subtitle">Let's make today count.</div>
+    </div>
+    <div class="header-right">
+      <div class="date-day" id="dateFull"></div>
+      <div class="date-full" id="dateShort"></div>
+      <div class="ppc-badge">Platinum Premier</div>
+    </div>
+  </div>
+
+  <!-- FOCUS -->
+  <div class="section">
+    <div class="section-label">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+      Today's focus
+    </div>
+    <textarea class="focus-input" id="focusInput" rows="2"
+      placeholder="What's the one thing that matters most today?"></textarea>
+  </div>
+
+  <!-- TASKS -->
+  <div class="section">
+    <div class="section-label">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      Today's tasks
+    </div>
+
+    <div class="task-add-row">
+      <input class="task-input" id="taskInput" type="text" placeholder="Add a task…" maxlength="120">
+      <select class="priority-select" id="prioritySelect">
+        <option value="high">🔴 High</option>
+        <option value="mid" selected>🟡 Mid</option>
+        <option value="low">🟢 Low</option>
+      </select>
+      <button class="add-btn" id="addBtn" title="Add task">+</button>
+    </div>
+
+    <div class="task-list" id="taskList"></div>
+
+    <div class="progress-row" id="progressRow" style="display:none;">
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+      </div>
+      <div class="progress-label" id="progressLabel">0%</div>
+    </div>
+  </div>
+
+  <!-- NOTES -->
+  <div class="section notes-section">
+    <div class="section-label">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H6a2 2 0 00-2 2v14a2 2 0 002 2h12a2 2 0 002-2v-5M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      Notes &amp; reminders
+    </div>
+    <textarea class="notes-textarea" id="notesInput" rows="4"
+      placeholder="Jot down anything — follow-ups, reminders, ideas…"></textarea>
+  </div>
+
+  <div class="footer">autosaved · ppc daily planner</div>
+</div>
+
+<script>
+  const STORAGE_KEY = 'ppc_planner_v1';
+
+  function load() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+  }
+  function save(data) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  let state = load();
+  if (!state.tasks) state.tasks = [];
+  if (!state.focus) state.focus = '';
+  if (!state.notes) state.notes = '';
+
+  // ── DATE & GREETING
+  function updateDateTime() {
+    const now = new Date();
+    const h = now.getHours();
+    const greet = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+    document.getElementById('greeting').innerHTML = `${greet}, <em>Rae</em>`;
+
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    document.getElementById('dateFull').textContent = days[now.getDay()];
+    document.getElementById('dateShort').textContent =
+      `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+  }
+  updateDateTime();
+  setInterval(updateDateTime, 60000);
+
+  // ── FOCUS
+  const focusInput = document.getElementById('focusInput');
+  focusInput.value = state.focus;
+  focusInput.addEventListener('input', () => {
+    state.focus = focusInput.value;
+    save(state);
+  });
+
+  // ── NOTES
+  const notesInput = document.getElementById('notesInput');
+  notesInput.value = state.notes;
+  notesInput.addEventListener('input', () => {
+    state.notes = notesInput.value;
+    save(state);
+  });
+
+  // ── TASKS
+  function renderTasks() {
+    const list = document.getElementById('taskList');
+    const progressRow = document.getElementById('progressRow');
+    list.innerHTML = '';
+
+    if (state.tasks.length === 0) {
+      list.innerHTML = '<div class="empty-state">No tasks yet — add one above ☕</div>';
+      progressRow.style.display = 'none';
+      return;
+    }
+
+    progressRow.style.display = 'flex';
+    const done = state.tasks.filter(t => t.done).length;
+    const pct = Math.round((done / state.tasks.length) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = pct + '%';
+
+    state.tasks.forEach((task, i) => {
+      const item = document.createElement('div');
+      item.className = 'task-item';
+
+      const cb = document.createElement('div');
+      cb.className = 'task-cb' + (task.done ? ' checked' : '');
+      cb.addEventListener('click', () => { state.tasks[i].done = !state.tasks[i].done; save(state); renderTasks(); });
+
+      const dot = document.createElement('div');
+      dot.className = 'priority-dot dot-' + task.priority;
+
+      const txt = document.createElement('div');
+      txt.className = 'task-text' + (task.done ? ' done' : '');
+      txt.textContent = task.text;
+      txt.addEventListener('click', () => { state.tasks[i].done = !state.tasks[i].done; save(state); renderTasks(); });
+
+      const del = document.createElement('button');
+      del.className = 'del-btn';
+      del.innerHTML = '×';
+      del.title = 'Remove';
+      del.addEventListener('click', () => { state.tasks.splice(i, 1); save(state); renderTasks(); });
+
+      item.appendChild(cb);
+      item.appendChild(dot);
+      item.appendChild(txt);
+      item.appendChild(del);
+      list.appendChild(item);
+    });
+  }
+
+  function addTask() {
+    const input = document.getElementById('taskInput');
+    const priority = document.getElementById('prioritySelect').value;
+    const text = input.value.trim();
+    if (!text) return;
+    state.tasks.unshift({ text, priority, done: false, id: Date.now() });
+    save(state);
+    renderTasks();
+    input.value = '';
+    input.focus();
+  }
+
+  document.getElementById('addBtn').addEventListener('click', addTask);
+  document.getElementById('taskInput').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); addTask(); }
+  });
+
+  renderTasks();
+</script>
+</body>
+</html>
