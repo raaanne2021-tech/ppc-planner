@@ -12,13 +12,12 @@
     --cream: #F8EDD9; --cream-dark: #EFD9B4; --card: #FFFBF3;
     --espresso: #2C1A0E; --brown: #6B3A1F; --caramel: #C07830;
     --caramel-light: #F0D4A0; --sage: #7A8C6E; --muted: #9C7E62;
-    --border: #DEC99A; --done: #A8B89A; --high: #C0533A; --font: 'Nunito', sans-serif;
+    --border: #DEC99A; --done: #A8B89A; --font: 'Nunito', sans-serif;
   }
   body { background: var(--cream); font-family: var(--font); color: var(--espresso); min-height: 100vh; padding: 22px 18px 40px;
     background-image: radial-gradient(ellipse at 90% 5%, rgba(192,120,48,.08) 0%, transparent 50%), radial-gradient(ellipse at 10% 80%, rgba(107,58,31,.06) 0%, transparent 50%); }
   .wrap { max-width: 700px; margin: 0 auto; }
 
-  /* HEADER */
   .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1.5px solid var(--border); }
   .logo { font-family: 'Playfair Display', serif; font-size: 23px; font-weight: 600; color: var(--espresso); }
   .logo-sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
@@ -27,83 +26,68 @@
   .sync-btn { font-size: 11px; font-weight: 600; color: var(--muted); background: transparent; border: 1px solid var(--border); border-radius: 8px; padding: 4px 10px; cursor: pointer; font-family: var(--font); transition: all .2s; }
   .sync-btn:hover { border-color: var(--caramel); color: var(--caramel); }
 
-  /* STATUS */
   .status-bar { border-radius: 10px; padding: 8px 14px; margin-bottom: 12px; font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: space-between; }
   .status-ok   { background: rgba(122,140,110,.15); color: var(--sage); }
-  .status-err  { background: rgba(192,83,58,.12);   color: var(--high); }
+  .status-err  { background: rgba(192,83,58,.12);   color: #C0533A; }
   .status-info { background: rgba(192,120,48,.12);  color: var(--caramel); }
 
-  /* TABS */
   .tabs { display: flex; gap: 6px; margin-bottom: 14px; }
   .tab { flex: 1; padding: 7px 0; border: 1px solid var(--border); border-radius: 9px; background: transparent; color: var(--muted); font-size: 12px; font-weight: 600; cursor: pointer; font-family: var(--font); transition: all .15s; }
   .tab.active { border-color: var(--caramel); background: rgba(192,120,48,.12); color: var(--caramel); }
 
-  /* DATE NAV */
   .date-nav { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px 18px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
   .date-nav button { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 20px; padding: 2px 8px; border-radius: 6px; line-height: 1; }
   .date-nav button:hover { color: var(--caramel); }
-  .date-center { text-align: center; }
-  .date-label { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 600; color: var(--espresso); }
-  .date-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .date-label { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 600; color: var(--espresso); text-align: center; }
+  .date-sub { font-size: 11px; color: var(--muted); margin-top: 2px; text-align: center; }
 
-  /* DATE PILLS for history */
   .date-pills { display: flex; flex-wrap: wrap; gap: 6px; }
   .pill { padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 11px; font-weight: 600; cursor: pointer; font-family: var(--font); transition: all .15s; }
   .pill.active { border-color: var(--caramel); background: rgba(192,120,48,.15); color: var(--caramel); }
 
-  /* CARDS */
   .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px 20px; margin-bottom: 14px; position: relative; overflow: hidden; }
   .card-accent { position: absolute; top: 0; left: 0; width: 4px; height: 100%; border-radius: 4px 0 0 4px; background: linear-gradient(to bottom, var(--caramel), var(--brown)); }
   .card-accent.green { background: linear-gradient(to bottom, var(--sage), #4A6A3A); }
   .sec-label { font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
 
-  /* ADD ROW */
   .add-row { display: flex; gap: 8px; align-items: center; }
   .task-input { flex: 1; background: var(--cream); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-family: var(--font); font-size: 13px; color: var(--espresso); outline: none; transition: border-color .2s; }
   .task-input:focus { border-color: var(--caramel); }
   .task-input::placeholder { color: var(--cream-dark); }
-  .pri-select { background: var(--cream); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-family: var(--font); font-size: 12px; color: var(--muted); outline: none; cursor: pointer; }
-  .add-btn { width: 34px; height: 34px; border-radius: 50%; border: none; background: var(--caramel); color: #fff; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all .2s; font-weight: 300; }
+  .pri-select { background: var(--cream); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-family: var(--font); font-size: 12px; color: var(--muted); outline: none; cursor: pointer; max-width: 130px; }
+  .add-btn { width: 34px; height: 34px; border-radius: 50%; border: none; background: var(--caramel); color: #fff; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all .2s; }
   .add-btn:hover { background: var(--brown); }
   .add-btn:disabled { opacity: .5; cursor: not-allowed; }
 
-  /* PROGRESS */
-  .prog-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-  .prog-bg { flex: 1; height: 4px; background: var(--cream-dark); border-radius: 10px; overflow: hidden; }
+  .group-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .prog-row { display: flex; align-items: center; gap: 8px; }
+  .prog-bg { width: 80px; height: 4px; background: var(--cream-dark); border-radius: 10px; overflow: hidden; }
   .prog-fill { height: 100%; background: linear-gradient(to right, var(--caramel), var(--brown)); border-radius: 10px; transition: width .4s; }
-  .prog-label { font-size: 11px; color: var(--muted); font-weight: 600; min-width: 40px; text-align: right; }
+  .prog-label { font-size: 11px; color: var(--muted); font-weight: 600; }
 
-  /* TASK ITEMS */
-  .task-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 9px; transition: background .15s; }
+  .task-item { display: flex; align-items: flex-start; gap: 10px; padding: 9px 10px; border-radius: 9px; transition: background .15s; }
   .task-item:hover { background: var(--cream); }
-  .task-cb { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--border); background: transparent; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all .2s; }
+  .task-cb { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--border); background: transparent; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all .2s; margin-top: 2px; }
   .task-cb.done { background: var(--done); border-color: var(--done); }
   .task-cb.done::after { content: ''; width: 5px; height: 9px; border-right: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(45deg) translate(-1px,-1px); display: block; }
-  .task-cb.busy { border-color: var(--caramel); }
-  .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-  .task-text { flex: 1; }
+  .task-cb.busy { border-color: var(--caramel); opacity: .6; }
+  .task-text { flex: 1; min-width: 0; }
   .task-title { font-size: 13.5px; color: var(--espresso); line-height: 1.4; }
   .task-title.done { text-decoration: line-through; color: var(--muted); opacity: .7; }
-  .task-meta { font-size: 11px; color: var(--muted); margin-top: 2px; opacity: .8; }
-  .tag { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 20px; flex-shrink: 0; }
+  .task-meta { font-size: 11px; color: var(--muted); margin-top: 3px; opacity: .85; }
+  .tags { display: flex; gap: 5px; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; align-items: flex-start; margin-top: 2px; }
+  .tag { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 20px; white-space: nowrap; }
 
-  /* GROUP HEADER */
-  .group-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-
-  /* EMPTY / LOADING */
   .empty { text-align: center; padding: 28px 0; color: var(--cream-dark); font-family: 'Playfair Display', serif; font-style: italic; font-size: 14px; }
-  .loading { text-align: center; padding: 28px 0; color: var(--cream-dark); font-size: 13px; }
-
   .footer { text-align: center; margin-top: 6px; font-size: 10px; color: var(--cream-dark); letter-spacing: .06em; }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <!-- HEADER -->
   <div class="header">
     <div>
-      <div class="logo">PPC Daily Planner</div>
+      <div class="logo">PPC Task Planner</div>
       <div class="logo-sub" id="taskCount">Connecting to Notion…</div>
     </div>
     <div class="header-right">
@@ -112,109 +96,105 @@
     </div>
   </div>
 
-  <!-- STATUS -->
   <div id="statusBar" style="display:none"></div>
 
-  <!-- TABS -->
   <div class="tabs">
     <button class="tab active" onclick="setView('today')"   id="tab-today">Today</button>
     <button class="tab"        onclick="setView('all')"     id="tab-all">All Tasks</button>
     <button class="tab"        onclick="setView('history')" id="tab-history">By Date</button>
   </div>
 
-  <!-- DATE NAV (today view) -->
   <div class="date-nav" id="dateNav">
     <button onclick="shiftDate(-1)">‹</button>
-    <div class="date-center">
+    <div>
       <div class="date-label" id="dateLabel">Today</div>
       <div class="date-sub"   id="dateSub"></div>
     </div>
     <button onclick="shiftDate(1)">›</button>
   </div>
 
-  <!-- DATE PILLS (history view) -->
   <div class="card" id="historyPicker" style="display:none">
     <div class="card-accent"></div>
     <div class="sec-label">Select a date</div>
     <div class="date-pills" id="datePills"></div>
   </div>
 
-  <!-- ADD TASK -->
   <div class="card">
     <div class="card-accent"></div>
     <div class="sec-label" id="addLabel">Add task · Today</div>
     <div class="add-row">
-      <input class="task-input" id="newTaskInput" type="text" placeholder="What needs to get done?" maxlength="200">
+      <input class="task-input" id="newTaskInput" type="text" placeholder="What needs to get done?" maxlength="200"
+        onkeydown="if(event.key==='Enter') addTask()">
       <select class="pri-select" id="newPriority">
-        <option value="High Priority">🔴 High</option>
-        <option value="Medium Priority" selected>🟡 Mid</option>
-        <option value="Low Priority">🟢 Low</option>
+        <option value="">— No priority</option>
+        <option value="Priority today">🔴 Priority today</option>
+        <option value="Priority this week">🟡 Priority this week</option>
       </select>
       <button class="add-btn" id="addBtn" onclick="addTask()">+</button>
     </div>
   </div>
 
-  <!-- TASK LIST -->
   <div id="taskContainer"></div>
 
-  <div class="footer">data lives in notion · changes sync both ways</div>
+  <div class="footer">tasks database · synced with notion · changes go both ways</div>
 </div>
 
 <script>
 const WORKER = 'https://ppc-taskplanner.rachel-f0b.workers.dev';
-const DB_ID  = '1e034595b2aa8048ba95d45c4c2fb3b8';
+const DB_ID  = '30634595b2aa807fbe6aeddda8aa124a';
 
-const PRIORITY = {
-  'High Priority':   { color: '#C0533A', bg: 'rgba(192,83,58,.1)',   label: 'High' },
-  'Medium Priority': { color: '#C07830', bg: 'rgba(192,120,48,.1)',  label: 'Mid'  },
-  'Low Priority':    { color: '#7A8C6E', bg: 'rgba(122,140,110,.1)', label: 'Low'  },
+const PRIORITY_STYLE = {
+  'Priority today':     { color: '#C0533A', bg: 'rgba(192,83,58,.1)',   label: '🔴 Today'     },
+  'Priority this week': { color: '#C07830', bg: 'rgba(192,120,48,.1)',  label: '🟡 This week' },
 };
 const STATUS_STYLE = {
   'Done':        { color: '#7A8C6E', bg: 'rgba(122,140,110,.12)' },
-  'In progress': { color: '#C07830', bg: 'rgba(192,120,48,.12)'  },
+  'In progress': { color: '#9B72CF', bg: 'rgba(155,114,207,.12)' },
   'Not started': { color: '#9C7E62', bg: 'rgba(156,126,98,.1)'   },
+  'Backlog':     { color: '#B0A090', bg: 'rgba(176,160,144,.1)'  },
 };
 
 let allTasks = [];
 let currentView = 'today';
 let selectedDate = toYMD(new Date());
 
-// ── UTILS ──
 function toYMD(d) { return d.toISOString().split('T')[0]; }
 function displayDate(ymd) {
   if (!ymd) return 'No date';
-  const d = new Date(ymd + 'T12:00:00');
   const today = toYMD(new Date());
   const yest  = toYMD(new Date(Date.now() - 86400000));
   if (ymd === today) return 'Today';
   if (ymd === yest)  return 'Yesterday';
+  const d = new Date(ymd + 'T12:00:00');
   return d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
 }
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 
-function showStatus(msg, type='info') {
+function showStatus(msg, type) {
   const bar = document.getElementById('statusBar');
   bar.className = 'status-bar status-' + type;
-  bar.innerHTML = msg + (type === 'err' ? ' <button onclick="hideStatus()" style="margin-left:10px;background:none;border:none;cursor:pointer;color:#C0533A;font-size:13px">×</button>' : '');
+  bar.innerHTML = msg + (type==='err' ? ' <button onclick="hideStatus()" style="background:none;border:none;cursor:pointer;color:#C0533A;font-size:14px;margin-left:8px">×</button>' : '');
   bar.style.display = 'flex';
   if (type !== 'err') setTimeout(hideStatus, 3000);
 }
 function hideStatus() { document.getElementById('statusBar').style.display = 'none'; }
 
-// ── PARSE NOTION ──
 function parsePage(page) {
   const p = page.properties || {};
   return {
     id:       page.id,
-    title:    p['To-do']?.title?.[0]?.plain_text || p['To-do']?.title?.[0]?.text?.content || 'Untitled',
+    title:    p['Task']?.title?.[0]?.plain_text || p['Task']?.title?.[0]?.text?.content || 'Untitled',
     status:   p['Status']?.status?.name || 'Not started',
-    priority: p['Type']?.multi_select?.[0]?.name || '',
-    doDate:   p['do date ']?.date?.start || null,
+    priority: p['Priority Type']?.select?.name || '',
+    doDate:   p['Do Date']?.date?.start || null,
+    dueDate:  p['Due Date']?.date?.start || null,
     notes:    p['Notes']?.rich_text?.[0]?.plain_text || p['Notes']?.rich_text?.[0]?.text?.content || '',
   };
 }
 
-// ── LOAD ──
-async function loadTasks(force = false) {
+async function loadTasks(force) {
   showStatus('Syncing with Notion…', 'info');
   try {
     const res  = await fetch(WORKER + '/tasks');
@@ -224,12 +204,11 @@ async function loadTasks(force = false) {
     renderView();
     showStatus('Synced ✓', 'ok');
   } catch(e) {
-    showStatus('Could not reach Notion. Check your Worker and try again.', 'err');
+    showStatus('Could not reach Notion. Check Worker URL and try again.', 'err');
     document.getElementById('taskContainer').innerHTML = '<div class="card"><div class="empty">Could not load tasks ☕</div></div>';
   }
 }
 
-// ── ADD ──
 async function addTask() {
   const input = document.getElementById('newTaskInput');
   const pri   = document.getElementById('newPriority').value;
@@ -240,56 +219,56 @@ async function addTask() {
   btn.disabled = true; btn.textContent = '…';
   showStatus('Adding task…', 'info');
 
-  const body = {
-    parent: { database_id: DB_ID },
-    properties: {
-      'To-do':    { title: [{ text: { content: title } }] },
-      'Status':   { status: { name: 'Not started' } },
-      'Type':     { multi_select: pri ? [{ name: pri }] : [] },
-      'do date ': { date: { start: selectedDate } },
-    }
+  const props = {
+    'Task':   { title: [{ text: { content: title } }] },
+    'Status': { status: { name: 'Not started' } },
+    'Do Date': { date: { start: selectedDate } },
   };
+  if (pri) props['Priority Type'] = { select: { name: pri } };
 
   try {
-    await fetch(WORKER + '/tasks', {
+    const res = await fetch(WORKER + '/tasks', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
+      body: JSON.stringify({ parent: { database_id: DB_ID }, properties: props })
     });
+    const data = await res.json();
+    if (data.object === 'error') throw new Error(data.message);
     input.value = '';
     showStatus('Task added ✓', 'ok');
     await loadTasks(true);
   } catch(e) {
-    showStatus('Could not add task.', 'err');
+    showStatus('Could not add task: ' + e.message, 'err');
   }
   btn.disabled = false; btn.textContent = '+';
 }
 
-// ── COMPLETE ──
 async function completeTask(id, el) {
   el.classList.add('busy');
-  showStatus('Updating in Notion…', 'info');
+  showStatus('Marking done in Notion…', 'info');
   try {
-    await fetch(WORKER + '/tasks/' + id.replaceAll('-',''), {
+    const cleanId = id.replaceAll('-','');
+    const res = await fetch(WORKER + '/tasks/' + cleanId, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ properties: { 'Status': { status: { name: 'Done' } } } })
     });
+    const data = await res.json();
+    if (data.object === 'error') throw new Error(data.message);
     showStatus('Marked done ✓', 'ok');
     await loadTasks(true);
   } catch(e) {
-    showStatus('Could not update task.', 'err');
+    showStatus('Could not update: ' + e.message, 'err');
     el.classList.remove('busy');
   }
 }
 
-// ── VIEW ──
 function setView(v) {
   currentView = v;
-  ['today','all','history'].forEach(t => document.getElementById('tab-' + t).classList.toggle('active', t === v));
-  document.getElementById('dateNav').style.display      = v === 'today'   ? 'flex' : 'none';
-  document.getElementById('historyPicker').style.display = v === 'history' ? 'block': 'none';
-  if (v === 'history') buildDatePills();
+  ['today','all','history'].forEach(t => document.getElementById('tab-'+t).classList.toggle('active', t===v));
+  document.getElementById('dateNav').style.display       = v==='today'   ? 'flex'  : 'none';
+  document.getElementById('historyPicker').style.display = v==='history' ? 'block' : 'none';
+  if (v==='history') buildDatePills();
   renderView();
 }
 
@@ -308,18 +287,59 @@ function updateDateNav() {
 }
 
 function buildDatePills() {
-  const dates = [...new Set(allTasks.map(t => t.doDate).filter(Boolean))].sort((a,b) => b.localeCompare(a));
-  const container = document.getElementById('datePills');
-  if (!dates.length) { container.innerHTML = '<span style="font-size:12px;color:var(--muted)">No dated tasks yet.</span>'; return; }
-  container.innerHTML = dates.map(d =>
-    `<button class="pill ${d === selectedDate ? 'active' : ''}" onclick="pickDate('${d}')">${displayDate(d)}</button>`
+  const dates = [...new Set(allTasks.map(t=>t.doDate).filter(Boolean))].sort((a,b)=>b.localeCompare(a));
+  const el = document.getElementById('datePills');
+  if (!dates.length) { el.innerHTML = '<span style="font-size:12px;color:var(--muted)">No dated tasks yet.</span>'; return; }
+  el.innerHTML = dates.map(d =>
+    `<button class="pill ${d===selectedDate?'active':''}" onclick="pickDate('${d}')">${displayDate(d)}</button>`
   ).join('');
 }
 
-function pickDate(d) {
-  selectedDate = d;
-  buildDatePills();
-  renderView();
+function pickDate(d) { selectedDate=d; buildDatePills(); renderView(); }
+
+function taskHTML(t, showDate) {
+  const p  = PRIORITY_STYLE[t.priority] || null;
+  const st = STATUS_STYLE[t.status]     || STATUS_STYLE['Not started'];
+  const isDone = t.status === 'Done';
+  const meta = [
+    t.notes   ? escHtml(t.notes) : null,
+    showDate && t.doDate ? displayDate(t.doDate) : null,
+    t.dueDate ? 'Due ' + displayDate(t.dueDate) : null,
+  ].filter(Boolean).join(' · ');
+
+  return `
+  <div class="task-item">
+    <div class="task-cb ${isDone?'done':''}" data-id="${t.id}" data-done="${isDone}" onclick="handleCheck(this)"></div>
+    <div class="task-text">
+      <div class="task-title ${isDone?'done':''}">${escHtml(t.title)}</div>
+      ${meta ? `<div class="task-meta">${meta}</div>` : ''}
+    </div>
+    <div class="tags">
+      ${p ? `<span class="tag" style="color:${p.color};background:${p.bg}">${p.label}</span>` : ''}
+      <span class="tag" style="color:${st.color};background:${st.bg}">${t.status==='Not started'?'To do':t.status}</span>
+    </div>
+  </div>`;
+}
+
+function groupCard(dateKey, tasks, showDate) {
+  const done    = tasks.filter(t=>t.status==='Done').length;
+  const pct     = tasks.length ? Math.round(done/tasks.length*100) : 0;
+  const pending = tasks.filter(t=>t.status!=='Done');
+  const doneList= tasks.filter(t=>t.status==='Done');
+  return `
+  <div class="card" style="margin-bottom:12px">
+    <div class="card-accent green"></div>
+    <div class="group-header">
+      <div class="sec-label" style="margin-bottom:0">${dateKey==='unscheduled'?'Unscheduled':displayDate(dateKey)}</div>
+      <div class="prog-row">
+        <div class="prog-bg"><div class="prog-fill" style="width:${pct}%"></div></div>
+        <div class="prog-label">${done}/${tasks.length}</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:4px">
+      ${[...pending,...doneList].map(t=>taskHTML(t,showDate)).join('')}
+    </div>
+  </div>`;
 }
 
 function renderView() {
@@ -327,110 +347,37 @@ function renderView() {
   const container = document.getElementById('taskContainer');
 
   if (currentView === 'all') {
-    renderGrouped(container);
+    const grouped = {};
+    allTasks.forEach(t => { const k=t.doDate||'unscheduled'; if(!grouped[k]) grouped[k]=[]; grouped[k].push(t); });
+    const sorted = Object.keys(grouped).sort((a,b)=>{ if(a==='unscheduled') return 1; if(b==='unscheduled') return -1; return b.localeCompare(a); });
+    container.innerHTML = sorted.length
+      ? sorted.map(k=>groupCard(k,grouped[k],false)).join('')
+      : '<div class="card"><div class="empty">No tasks yet ☕</div></div>';
     return;
   }
 
-  const tasks = allTasks.filter(t => t.doDate === selectedDate);
-  const pending = tasks.filter(t => t.status !== 'Done');
-  const done    = tasks.filter(t => t.status === 'Done');
+  const tasks   = allTasks.filter(t=>t.doDate===selectedDate);
+  const pending = tasks.filter(t=>t.status!=='Done');
+  const done    = tasks.filter(t=>t.status==='Done');
+  const pct     = tasks.length ? Math.round(done.length/tasks.length*100) : 0;
 
   let html = '<div class="card"><div class="card-accent green"></div>';
   html += `<div class="group-header">
-    <div class="sec-label" style="margin-bottom:0">${displayDate(selectedDate)}</div>`;
-  if (tasks.length) {
-    const pct = Math.round(done.length / tasks.length * 100);
-    html += `<div class="prog-row" style="margin-bottom:0;flex:0 0 auto;width:140px">
-      <div class="prog-bg"><div class="prog-fill" style="width:${pct}%"></div></div>
-      <div class="prog-label">${done.length}/${tasks.length}</div>
-    </div>`;
-  }
-  html += '</div>';
-
-  if (!tasks.length) {
-    html += `<div class="empty">No tasks for ${displayDate(selectedDate)} ☕</div>`;
-  } else {
-    html += '<div style="display:flex;flex-direction:column;gap:4px">';
-    [...pending, ...done].forEach(t => { html += taskHTML(t, false); });
-    html += '</div>';
-  }
-  html += '</div>';
-  container.innerHTML = html;
-  attachListeners();
-}
-
-function renderGrouped(container) {
-  const grouped = {};
-  allTasks.forEach(t => {
-    const k = t.doDate || 'unscheduled';
-    if (!grouped[k]) grouped[k] = [];
-    grouped[k].push(t);
-  });
-  const sorted = Object.keys(grouped).sort((a,b) => {
-    if (a === 'unscheduled') return 1;
-    if (b === 'unscheduled') return -1;
-    return b.localeCompare(a);
-  });
-
-  if (!sorted.length) {
-    container.innerHTML = '<div class="card"><div class="empty">No tasks yet ☕</div></div>';
-    return;
-  }
-
-  let html = '';
-  sorted.forEach(dateKey => {
-    const tasks   = grouped[dateKey];
-    const pending = tasks.filter(t => t.status !== 'Done');
-    const done    = tasks.filter(t => t.status === 'Done');
-    const pct     = tasks.length ? Math.round(done.length / tasks.length * 100) : 0;
-    html += '<div class="card" style="margin-bottom:12px"><div class="card-accent green"></div>';
-    html += `<div class="group-header">
-      <div class="sec-label" style="margin-bottom:0">${dateKey === 'unscheduled' ? 'Unscheduled' : displayDate(dateKey)}</div>
-      <div class="prog-row" style="margin-bottom:0;flex:0 0 auto;width:140px">
-        <div class="prog-bg"><div class="prog-fill" style="width:${pct}%"></div></div>
-        <div class="prog-label">${done.length}/${tasks.length}</div>
-      </div>
-    </div>`;
-    html += '<div style="display:flex;flex-direction:column;gap:4px">';
-    [...pending, ...done].forEach(t => { html += taskHTML(t, dateKey === 'unscheduled'); });
-    html += '</div></div>';
-  });
-  container.innerHTML = html;
-  attachListeners();
-}
-
-function taskHTML(t, showDate) {
-  const p  = PRIORITY[t.priority]   || { color:'#9C7E62', bg:'rgba(156,126,98,.1)', label:'' };
-  const st = STATUS_STYLE[t.status] || STATUS_STYLE['Not started'];
-  const isDone = t.status === 'Done';
-  return `
-  <div class="task-item">
-    <div class="task-cb ${isDone ? 'done' : ''}" data-id="${t.id}" data-done="${isDone}" onclick="handleCheck(this)"></div>
-    <div class="dot" style="background:${p.color}"></div>
-    <div class="task-text">
-      <div class="task-title ${isDone ? 'done' : ''}">${escHtml(t.title)}</div>
-      ${t.notes ? `<div class="task-meta">${escHtml(t.notes)}</div>` : ''}
-      ${showDate && t.doDate ? `<div class="task-meta">${displayDate(t.doDate)}</div>` : ''}
-    </div>
-    ${t.priority ? `<span class="tag" style="color:${p.color};background:${p.bg}">${p.label}</span>` : ''}
-    <span class="tag" style="color:${st.color};background:${st.bg}">${t.status === 'Not started' ? 'To do' : t.status}</span>
+    <div class="sec-label" style="margin-bottom:0">${displayDate(selectedDate)}</div>
+    ${tasks.length ? `<div class="prog-row"><div class="prog-bg"><div class="prog-fill" style="width:${pct}%"></div></div><div class="prog-label">${done.length}/${tasks.length}</div></div>` : ''}
   </div>`;
-}
-
-function attachListeners() {
-  document.getElementById('newTaskInput').onkeydown = e => { if (e.key === 'Enter') addTask(); };
+  html += tasks.length
+    ? `<div style="display:flex;flex-direction:column;gap:4px">${[...pending,...done].map(t=>taskHTML(t,false)).join('')}</div>`
+    : `<div class="empty">No tasks for ${displayDate(selectedDate)} ☕</div>`;
+  html += '</div>';
+  container.innerHTML = html;
 }
 
 function handleCheck(el) {
-  if (el.dataset.done === 'true') return;
+  if (el.dataset.done==='true' || el.classList.contains('busy')) return;
   completeTask(el.dataset.id, el);
 }
 
-function escHtml(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-// ── INIT ──
 updateDateNav();
 loadTasks();
 </script>
