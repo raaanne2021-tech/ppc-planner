@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Recap</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#F5EFE4;--card:#fff;--yellow:#F5D060;--pink:#F0A0B4;--sage:#A8C878;--lav:#C0A8E0;--text:#1E1C18;--side:#1E1C18;--muted:rgba(30,28,24,.45);--bdr:rgba(30,28,24,.1);--r:16px;--f:'Outfit',sans-serif}
+body{background:var(--bg);font-family:var(--f);color:var(--text);padding:20px 18px 32px;min-height:100vh}
+.wrap{max-width:720px;margin:0 auto}
+.hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--bdr)}
+.hdr-t{font-size:22px;font-weight:800;letter-spacing:-.02em}.hdr-t span{color:#C07090}
+.hdr-sub{font-size:12px;color:var(--muted);margin-top:3px}.hdr-date{font-size:12px;font-weight:600;color:var(--muted)}
+.sync{font-size:11px;font-weight:600;color:var(--muted);background:transparent;border:1px solid var(--bdr);border-radius:8px;padding:4px 10px;cursor:pointer;font-family:var(--f);margin-top:4px;transition:all .15s}.sync:hover{border-color:var(--text);color:var(--text)}
+.sb{border-radius:10px;padding:8px 14px;margin-bottom:12px;font-size:12px;font-weight:500;display:flex;align-items:center}.sb-ok{background:rgba(122,140,110,.15);color:#607850}.sb-err{background:rgba(192,83,58,.12);color:#C04040}.sb-info{background:rgba(192,120,48,.12);color:#A07020}
+.ws{display:flex;gap:4px;margin-bottom:16px}.wd{flex:1;text-align:center;padding:7px 4px;border-radius:10px;cursor:pointer;transition:background .15s;border:1.5px solid transparent}.wd:hover{background:rgba(30,28,24,.05)}.wd.td{background:var(--side);border-color:var(--side)}.wd .wl{font-size:9px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}.wd.td .wl{color:rgba(255,255,255,.5)}.wd .wn{font-size:14px;font-weight:700;color:var(--text);margin-top:2px}.wd.td .wn{color:#fff}.wd.sl{border-color:var(--sage);background:rgba(168,200,120,.12)}.wd.td.sl{border-color:var(--side);background:var(--side)}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.sc{border-radius:var(--r);padding:16px;position:relative;overflow:hidden}.sc.yl{background:var(--yellow)}.sc.sg2{background:var(--sage)}.sc.lv{background:var(--lav)}
+.sl2{font-size:10px;font-weight:600;color:rgba(30,28,24,.5);letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}.sn{font-size:30px;font-weight:800;line-height:1;letter-spacing:-.02em}.ss{font-size:10px;font-weight:500;color:rgba(30,28,24,.45);margin-top:3px}.si{position:absolute;bottom:10px;right:12px;font-size:22px;opacity:.2}
+.pn{background:var(--card);border-radius:var(--r);overflow:hidden;box-shadow:0 2px 12px rgba(30,28,24,.07)}
+.ph{padding:12px 16px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between}.pt{font-size:14px;font-weight:700}.pa{display:flex;gap:6px}
+.pb{font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;border:1px solid var(--bdr);background:transparent;padding:4px 10px;border-radius:20px;font-family:var(--f);transition:all .15s}.pb:hover{border-color:var(--text);color:var(--text)}.pb.act{background:var(--side);color:#fff;border-color:var(--side)}
+.pd{padding:14px 16px}
+.se{background:#fff;border:1px solid var(--bdr);border-radius:8px;padding:6px 8px;font-family:var(--f);font-size:11px;color:var(--text);outline:none;cursor:pointer;max-width:200px}
+.ab{border-radius:8px;border:none;background:var(--side);color:var(--yellow);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .12s;font-family:var(--f);padding:0 14px;height:30px;font-size:12px;font-weight:600}.ab:hover{transform:scale(1.05)}.ab:disabled{opacity:.4;cursor:not-allowed}
+.rf{background:var(--bg);border-radius:12px;padding:14px;margin-bottom:14px;display:flex;flex-direction:column;gap:10px}
+.rr{display:flex;gap:8px;align-items:center}.rl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);min-width:60px;flex-shrink:0}
+.ri{flex:1;background:#fff;border:1px solid var(--bdr);border-radius:8px;padding:8px 10px;font-family:var(--f);font-size:13px;color:var(--text);outline:none;resize:none;line-height:1.5}.ri:focus{border-color:var(--sage)}.ri::placeholder{color:var(--muted)}
+.rb{display:flex;justify-content:flex-end;gap:8px;align-items:center}
+.le{padding:14px;border-radius:12px;background:var(--bg);margin-bottom:8px;animation:fu .15s ease-out}.le:hover{background:#EDE7DC}
+@keyframes fu{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.ll{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}.ll-d{color:#608050}.ll-n{color:#C07090;margin-top:10px}
+.lt{font-size:13px;font-weight:500;line-height:1.5}.lm{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.tg{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap}.tg-j{background:#E0E8F4;color:#405880}.tg-o{background:#F0ECE4;color:rgba(30,28,24,.5)}
+.em{text-align:center;padding:20px 0;font-size:13px;color:var(--muted)}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:rgba(30,28,24,.12);border-radius:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hdr"><div><div class="hdr-t">◎ Daily <span>Recap</span></div><div class="hdr-sub" id="topSub">Loading…</div></div><div class="hdr-r"><div class="hdr-date" id="metaDate"></div><button class="sync" onclick="loadR()">↻ Sync</button></div></div>
+  <div id="sBar" style="display:none"></div>
+  <div class="ws" id="weekStrip"></div>
+  <div class="sg">
+    <div class="sc lv"><div class="sl2">Logs Today</div><div class="sn" id="s1">-</div><div class="ss" id="s1s">loading</div><div class="si">📝</div></div>
+    <div class="sc yl"><div class="sl2">This Week</div><div class="sn" id="s2">-</div><div class="ss">entries</div><div class="si">📊</div></div>
+    <div class="sc sg2"><div class="sl2">Projects</div><div class="sn" id="s3">-</div><div class="ss">covered</div><div class="si">🚧</div></div>
+  </div>
+  <div class="pn"><div class="ph"><div class="pt">Daily Log</div><div class="pa"><button class="pb act" id="bT" onclick="srf('today')">Today</button><button class="pb" id="bA" onclick="srf('all')">Recent</button></div></div><div class="pd">
+    <div class="rf">
+      <div class="rr"><div class="rl">✅ Done</div><textarea class="ri" id="rDone" rows="2" placeholder="What did you accomplish?"></textarea></div>
+      <div class="rr"><div class="rl">➡️ Next</div><textarea class="ri" id="rNext" rows="2" placeholder="What's coming up?"></textarea></div>
+      <div class="rb"><select class="se" id="rProj"><option value="">Select project</option></select><button class="ab" id="rBtn" onclick="addR()">+ Log</button></div>
+    </div>
+    <div id="list" style="max-height:400px;overflow-y:auto"><div class="em">Loading…</div></div>
+  </div></div>
+</div>
+<script>
+const W='https://ppc-taskplanner.rachel-f0b.workers.dev',DB_L='35e34595b2aa80828a81dada51401d22',DB_P='35934595b2aa8034a4eed7794f61ad8d';
+let recaps=[],projects=[],rm='today',sel=toYMD(new Date());
+function toYMD(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function dD(y){if(!y)return'';const t=toYMD(new Date()),x=toYMD(new Date(Date.now()-864e5));if(y===t)return'Today';if(y===x)return'Yesterday';return new Date(y+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function ss(m,t){const b=document.getElementById('sBar');b.className='sb sb-'+t;b.textContent=m;b.style.display='flex';if(t!=='err')setTimeout(()=>b.style.display='none',3000)}
+function initUI(){const n=new Date(),ds=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],ms=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];document.getElementById('metaDate').textContent=`${ds[n.getDay()]}, ${ms[n.getMonth()]} ${n.getDate()}`;bw(n)}
+function bw(now){const s=document.getElementById('weekStrip'),dn=['Su','Mo','Tu','We','Th','Fr','Sa'],st=new Date(now);st.setDate(now.getDate()-now.getDay());const ty=toYMD(now);s.innerHTML='';for(let i=0;i<7;i++){const d=new Date(st);d.setDate(st.getDate()+i);const y=toYMD(d),isT=y===ty,isS=y===sel;const c=document.createElement('div');c.className='wd'+(isT?' td':'')+(isS&&!isT?' sl':'');c.innerHTML=`<div class="wl">${dn[i]}</div><div class="wn">${d.getDate()}</div>`;c.onclick=()=>{sel=y;bw(now);render()};s.appendChild(c)}}
+function pn(id){const c=id.replaceAll('-','');const p=projects.find(x=>x.id.replaceAll('-','')=== c);return p?p.name:''}
+async function loadP(){try{const r=await fetch(`${W}/query/${DB_P}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page_size:50})});const d=await r.json();projects=(d.results||[]).map(p=>({id:p.id,name:p.properties?.['Name']?.title?.[0]?.plain_text||'Untitled',status:p.properties?.['Status']?.status?.name||''}));const s=document.getElementById('rProj');s.innerHTML='<option value="">Select project</option>';projects.filter(p=>p.status!=='Done').forEach(p=>{s.innerHTML+=`<option value="${p.id}">${esc(p.name)}</option>`})}catch(e){}}
+async function loadR(){ss('Syncing…','info');if(!projects.length)await loadP();try{const r=await fetch(`${W}/query/${DB_L}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page_size:50,sorts:[{property:'Date',direction:'descending'}]})});const d=await r.json();recaps=(d.results||[]).map(p=>{const r2=p.properties||{};return{id:p.id,done:r2["What's done?"]?.title?.[0]?.plain_text||'',next:r2["What's next?"]?.rich_text?.[0]?.plain_text||'',date:r2['Date']?.date?.start||null,projIds:(r2["🚧 Projects "]?.relation||[]).map(x=>x.id)}});render();ss('Synced ✓','ok');document.getElementById('topSub').textContent=`${recaps.length} entries total`}catch(e){ss('Could not load.','err')}}
+function srf(m){rm=m;document.getElementById('bT').classList.toggle('act',m==='today');document.getElementById('bA').classList.toggle('act',m==='all');render()}
+function render(){const ls=document.getElementById('list');let r=recaps;if(rm==='today')r=recaps.filter(x=>x.date===sel);
+const tdy=recaps.filter(x=>x.date===toYMD(new Date()));const now=new Date(),sw=new Date(now);sw.setDate(now.getDate()-now.getDay());const wk=recaps.filter(x=>x.date&&x.date>=toYMD(sw));const pIds=new Set();recaps.forEach(x=>x.projIds.forEach(id=>pIds.add(id)));
+document.getElementById('s1').textContent=tdy.length;document.getElementById('s1s').textContent=tdy.length?'entries':'none yet';document.getElementById('s2').textContent=wk.length;document.getElementById('s3').textContent=pIds.size;
+if(!r.length){ls.innerHTML=`<div class="em">No recaps ${rm==='today'?'for '+dD(sel):''} ☕</div>`;return}
+ls.innerHTML=r.map(x=>{const pt=x.projIds.map(id=>{const n=pn(id);return n?`<span class="tg tg-j">${esc(n)}</span>`:''}).join('');const dt=rm==='all'&&x.date?`<span class="tg tg-o">${dD(x.date)}</span>`:'';
+return `<div class="le">${x.done?`<div class="ll ll-d">✅ What's done</div><div class="lt">${esc(x.done)}</div>`:''}${x.next?`<div class="ll ll-n">➡️ What's next</div><div class="lt">${esc(x.next)}</div>`:''}<div class="lm">${pt}${dt}</div></div>`}).join('')}
+async function addR(){const dE=document.getElementById('rDone'),nE=document.getElementById('rNext'),pId=document.getElementById('rProj').value;const dT=dE.value.trim(),nT=nE.value.trim();if(!dT&&!nT)return;
+const b=document.getElementById('rBtn');b.disabled=true;b.textContent='…';ss('Logging…','info');
+const pr={"What's done?":{title:[{text:{content:dT||'(no update)'}}]},'Date':{date:{start:sel}}};if(nT)pr["What's next?"]={rich_text:[{text:{content:nT}}]};if(pId)pr["🚧 Projects "]={relation:[{id:pId}]};
+try{const r=await fetch(`${W}/pages`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({parent:{database_id:DB_L},properties:pr})});const d=await r.json();if(d.object==='error')throw new Error(d.message);dE.value='';nE.value='';ss('Logged ✓','ok');await loadR()}catch(e){ss('Error: '+e.message,'err')}b.disabled=false;b.textContent='+ Log'}
+initUI();loadR();
+</script>
+</body>
+</html>
