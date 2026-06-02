@@ -7,98 +7,584 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#F5EFE4;--card:#fff;--yellow:#F5D060;--pink:#F0A0B4;--sage:#A8C878;--lav:#C0A8E0;--text:#1E1C18;--side:#1E1C18;--muted:rgba(30,28,24,.45);--bdr:rgba(30,28,24,.1);--r:16px;--f:'Outfit',sans-serif}
-body{background:var(--bg);font-family:var(--f);color:var(--text);padding:20px 18px 32px;min-height:100vh}
-.wrap{max-width:760px;margin:0 auto}
-.hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--bdr)}
-.hdr-t{font-size:24px;font-weight:800;letter-spacing:-.02em}.hdr-t span{color:#C07090}
-.hdr-sub{font-size:12px;color:var(--muted);margin-top:3px}.hdr-date{font-size:12px;font-weight:600;color:var(--muted)}
-.sync{font-size:11px;font-weight:600;color:var(--muted);background:transparent;border:1px solid var(--bdr);border-radius:8px;padding:4px 10px;cursor:pointer;font-family:var(--f);margin-top:4px;transition:all .15s}.sync:hover{border-color:var(--text);color:var(--text)}
-.sb{border-radius:10px;padding:8px 14px;margin-bottom:12px;font-size:12px;font-weight:500;display:flex;align-items:center}.sb-ok{background:rgba(122,140,110,.15);color:#607850}.sb-err{background:rgba(192,83,58,.12);color:#C04040}.sb-info{background:rgba(192,120,48,.12);color:#A07020}
-.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
-.sc{border-radius:var(--r);padding:14px;position:relative;overflow:hidden}.sc.yl{background:var(--yellow)}.sc.pk{background:var(--pink)}.sc.sg2{background:var(--sage)}.sc.lv{background:var(--lav)}
-.sl{font-size:9px;font-weight:600;color:rgba(30,28,24,.5);letter-spacing:.04em;text-transform:uppercase;margin-bottom:5px}.sn{font-size:28px;font-weight:800;line-height:1;letter-spacing:-.02em}.ss{font-size:9px;font-weight:500;color:rgba(30,28,24,.45);margin-top:3px}.si{position:absolute;bottom:8px;right:10px;font-size:20px;opacity:.2}
-.og{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.pn{background:var(--card);border-radius:var(--r);overflow:hidden;box-shadow:0 2px 12px rgba(30,28,24,.07)}
-.ph{padding:11px 14px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between}.pt{font-size:13px;font-weight:700}
-.pd{padding:12px 14px;max-height:200px;overflow-y:auto}
-.tw{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:9px;background:var(--bg);margin-bottom:4px;font-size:12px}.tw:hover{background:#EDE7DC}
-.cb-s{width:14px;height:14px;border-radius:4px;border:1.5px solid rgba(30,28,24,.2);background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center}.cb-s.dn{background:var(--sage);border-color:var(--sage)}.cb-s.dn::after{content:'';width:3px;height:6px;border-right:1.5px solid var(--side);border-bottom:1.5px solid var(--side);transform:rotate(45deg) translate(-1px,-1px);display:block}
-.tx-s{flex:1;font-size:12px;font-weight:500;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tx-s.dn{text-decoration:line-through;color:var(--muted)}
-.tg{font-size:9px;font-weight:600;padding:2px 6px;border-radius:16px;flex-shrink:0;white-space:nowrap}
-.tg-t{background:#FFE8E0;color:#C04040}.tg-d{background:#E0F4E0;color:#407040}.tg-p{background:#E8E0F4;color:#6848A0}.tg-o{background:#F0ECE4;color:rgba(30,28,24,.5)}.tg-j{background:#E0E8F4;color:#405880}.tg-n{background:#FFF0E8;color:#906040}
-.le-s{padding:10px;border-radius:9px;background:var(--bg);margin-bottom:4px}.le-s:hover{background:#EDE7DC}
-.ll-s{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;color:#608050}.lt-s{font-size:12px;font-weight:500;line-height:1.4}
-.ne-s{padding:8px 10px;border-radius:9px;background:var(--bg);margin-bottom:4px;display:flex;align-items:center;gap:8px;font-size:12px}.ne-s:hover{background:#EDE7DC}
+:root{
+  --bg:#F5EFE4;--card:#fff;--yellow:#F5D060;--pink:#F0A0B4;--sage:#A8C878;--lav:#C0A8E0;
+  --text:#1E1C18;--side:#1E1C18;--muted:rgba(30,28,24,.45);--bdr:rgba(30,28,24,.1);
+  --r:14px;--f:'Outfit',sans-serif;
+}
+html,body{height:100%}
+body{background:var(--bg);font-family:var(--f);color:var(--text);padding:18px 20px 32px;min-height:100vh}
+
+/* HEADER */
+.hdr{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:14px;padding-bottom:13px;border-bottom:1px solid var(--bdr)}
+.gr{font-size:23px;font-weight:800;letter-spacing:-.02em}.gr span{color:#C07090}
+.hdr-sub{font-size:11px;color:var(--muted);margin-top:4px}
+.hdr-r{display:flex;align-items:center;gap:10px}
+.hdr-date{font-size:12px;font-weight:600;color:var(--muted)}
+.sync-all{font-size:11px;font-weight:600;color:var(--muted);background:transparent;border:1px solid var(--bdr);border-radius:8px;padding:5px 12px;cursor:pointer;font-family:var(--f);transition:all .15s}.sync-all:hover{border-color:var(--text);color:var(--text)}
+
+/* STATUS */
+.sb{border-radius:10px;padding:7px 14px;margin-bottom:12px;font-size:12px;font-weight:500;display:flex;align-items:center}
+.sb-ok{background:rgba(122,140,110,.15);color:#607850}.sb-err{background:rgba(192,83,58,.12);color:#C04040}.sb-info{background:rgba(192,120,48,.12);color:#A07020}
+
+/* WEEK STRIP */
+.ws{display:flex;gap:4px;margin-bottom:14px}
+.wd{flex:1;text-align:center;padding:6px 4px;border-radius:9px;cursor:pointer;border:1.5px solid transparent;transition:background .15s}
+.wd:hover{background:rgba(30,28,24,.05)}.wd.td{background:var(--side);border-color:var(--side)}
+.wd .wl{font-size:8px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}.wd.td .wl{color:rgba(255,255,255,.5)}
+.wd .wn{font-size:13px;font-weight:700;color:var(--text);margin-top:1px}.wd.td .wn{color:#fff}
+.wd.sl{border-color:var(--sage);background:rgba(168,200,120,.1)}.wd.td.sl{border-color:var(--side);background:var(--side)}
+
+/* TOP ROW — 3 equal columns */
+.top-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;align-items:start}
+
+/* BOTTOM ROW — full width */
+.bot-row{width:100%}
+
+/* PANEL */
+.pn{background:var(--card);border-radius:var(--r);overflow:hidden;box-shadow:0 2px 10px rgba(30,28,24,.07)}
+.ph{padding:11px 14px 10px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between}
+.pt{font-size:13px;font-weight:700}
+.pa{display:flex;gap:5px;align-items:center}
+.pb{font-size:10px;font-weight:600;color:var(--muted);cursor:pointer;border:1px solid var(--bdr);background:transparent;padding:3px 8px;border-radius:14px;font-family:var(--f);transition:all .15s}.pb:hover{border-color:var(--text);color:var(--text)}.pb.act{background:var(--side);color:#fff;border-color:var(--side)}
+.pd{padding:12px 14px}
+
+/* TASK ROW */
+.tl{display:flex;flex-direction:column;gap:4px;max-height:420px;overflow-y:auto}
+.tw{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:9px;background:var(--bg);transition:background .15s;animation:fu .15s ease-out}
+@keyframes fu{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+.tw:hover{background:#EDE7DC}
+.cb{width:16px;height:16px;border-radius:4px;border:1.5px solid rgba(30,28,24,.2);background:#fff;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.cb.dn{background:var(--sage);border-color:var(--sage)}.cb.dn::after{content:'';width:3px;height:7px;border-right:2px solid var(--side);border-bottom:2px solid var(--side);transform:rotate(45deg) translate(-1px,-1px);display:block}.cb.bz{opacity:.5}
+.tx{flex:1;font-size:12.5px;font-weight:500;cursor:pointer;line-height:1.4;min-width:0}.tx.dn{text-decoration:line-through;color:var(--muted)}
+.tn{font-size:10px;color:var(--muted);margin-top:1px}
+.tg{font-size:9px;font-weight:700;padding:2px 7px;border-radius:12px;flex-shrink:0;white-space:nowrap}
+.tg-t{background:#FFE8E0;color:#C04040}.tg-w{background:#FFF4D0;color:#906820}
+.tg-d{background:#E0F4E0;color:#407040}.tg-ip{background:#E8E0F4;color:#6848A0}
+.tg-o{background:#F0ECE4;color:rgba(30,28,24,.45)}.tg-b{background:#F5F0E8;color:rgba(30,28,24,.3)}
+.tags{display:flex;gap:3px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
+
+/* ADD ROW */
+.ar{display:flex;gap:6px;align-items:center;margin-bottom:12px;background:var(--bg);padding:6px 8px;border-radius:10px}
+.ip{flex:1;background:transparent;border:none;padding:5px 6px;font-family:var(--f);font-size:12px;color:var(--text);outline:none}.ip::placeholder{color:var(--muted)}
+.se{background:#fff;border:1px solid var(--bdr);border-radius:7px;padding:5px 7px;font-family:var(--f);font-size:10px;color:var(--text);outline:none;cursor:pointer}
+.ab{width:26px;height:26px;border-radius:7px;border:none;background:var(--side);color:var(--yellow);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1;transition:transform .12s}.ab:hover{transform:scale(1.08)}.ab:disabled{opacity:.4;cursor:not-allowed}
+.ab-w{width:auto;padding:0 12px;font-size:11px;font-weight:600;border-radius:8px;height:28px}
+
+/* PROGRESS */
+.prog-wrap{margin-top:10px;padding-top:10px;border-top:1px solid var(--bdr)}
+.prog-top{display:flex;justify-content:space-between;font-size:10px;font-weight:600;color:var(--muted);margin-bottom:5px}
+.prog-track{height:5px;background:var(--bg);border-radius:10px;overflow:hidden}
+.prog-fill{height:100%;background:var(--sage);border-radius:10px;transition:width .4s ease}
+
 .em{text-align:center;padding:16px 0;font-size:12px;color:var(--muted)}
-::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:rgba(30,28,24,.12);border-radius:4px}
+
+/* NOTES */
+.notes-area{width:100%;min-height:350px;border:none;background:transparent;font-family:var(--f);font-size:13px;color:var(--text);line-height:1.8;outline:none;resize:none;caret-color:var(--sage)}
+.notes-area::placeholder{color:var(--muted)}
+.notes-foot{display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid var(--bdr)}
+.notes-count{font-size:10px;color:var(--muted)}
+.clear-btn{font-size:10px;font-weight:600;color:var(--muted);background:transparent;border:1px solid var(--bdr);border-radius:7px;padding:3px 8px;cursor:pointer;font-family:var(--f);transition:all .15s}.clear-btn:hover{border-color:#C04040;color:#C04040}
+
+/* RECAP */
+.rf{background:var(--bg);border-radius:10px;padding:10px 12px;margin-bottom:10px;display:flex;flex-direction:column;gap:8px}
+.rl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:3px}
+.ri{width:100%;background:#fff;border:1px solid var(--bdr);border-radius:7px;padding:7px 9px;font-family:var(--f);font-size:12px;color:var(--text);outline:none;resize:none;line-height:1.5}.ri:focus{border-color:var(--sage)}.ri::placeholder{color:var(--muted)}
+.rb{display:flex;justify-content:flex-end;gap:6px;align-items:center}
+.le{padding:10px 12px;border-radius:10px;background:var(--bg);margin-bottom:6px;animation:fu .15s ease-out}.le:hover{background:#EDE7DC}
+.ll{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px}.ll-d{color:#608050}.ll-n{color:#C07090;margin-top:8px}
+.lt{font-size:12px;font-weight:500;line-height:1.5}
+.lm{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
+.tg-j{background:#E0E8F4;color:#405880;font-size:9px;font-weight:700;padding:2px 7px;border-radius:12px;white-space:nowrap}
+.tg-date{background:#F0ECE4;color:rgba(30,28,24,.45);font-size:9px;font-weight:700;padding:2px 7px;border-radius:12px}
+
+/* PROJECT TASKS PANEL */
+.proj-panel{display:grid;grid-template-columns:220px 1fr;min-height:280px}
+.proj-sidebar{border-right:1px solid var(--bdr);padding:12px 10px;display:flex;flex-direction:column;gap:4px;overflow-y:auto;max-height:420px}
+.proj-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;cursor:pointer;transition:all .15s;border:1.5px solid transparent}
+.proj-item:hover{background:var(--bg)}
+.proj-item.active{background:var(--side);border-color:var(--side)}
+.proj-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot-active{background:var(--sage)}.dot-ns{background:var(--yellow)}.dot-bl{background:rgba(30,28,24,.2)}
+.proj-name{font-size:12px;font-weight:600;color:var(--text);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.3}
+.proj-item.active .proj-name{color:#fff}
+.proj-count{font-size:10px;font-weight:700;color:var(--muted);flex-shrink:0;background:rgba(30,28,24,.08);padding:2px 7px;border-radius:10px}
+.proj-item.active .proj-count{background:rgba(255,255,255,.15);color:rgba(255,255,255,.7)}
+.proj-empty{font-size:12px;color:var(--muted);padding:12px 10px;text-align:center}
+
+.proj-content{padding:14px 16px;display:flex;flex-direction:column;min-height:280px}
+.proj-content-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--bdr)}
+.proj-content-title{font-size:14px;font-weight:700;color:var(--text)}
+.proj-content-meta{font-size:11px;color:var(--muted)}
+.proj-task-list{flex:1;display:flex;flex-direction:column;gap:4px;overflow-y:auto;max-height:340px}
+.proj-add-row{display:flex;gap:6px;align-items:center;margin-bottom:12px;background:var(--bg);padding:6px 8px;border-radius:10px}
+
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:rgba(30,28,24,.1);border-radius:4px}
+
+/* STAT CARDS */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.sc{border-radius:var(--r);padding:16px 18px 14px;position:relative;overflow:hidden}
+.sc.yl{background:var(--yellow)}.sc.pk{background:var(--pink)}.sc.sg{background:var(--sage)}.sc.lv{background:var(--lav)}
+.sc-num{font-size:10px;font-weight:700;color:rgba(30,28,24,.4);letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.sc-val{font-size:36px;font-weight:800;color:var(--text);line-height:1;letter-spacing:-.02em}
+.sc-sub{font-size:11px;font-weight:500;color:rgba(30,28,24,.45);margin-top:4px}
+.sc-icon{position:absolute;bottom:10px;right:14px;font-size:26px;opacity:.18}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="hdr"><div><div class="hdr-t" id="greeting">Good morning, <span>Rae.</span></div><div class="hdr-sub" id="topSub">Loading overview…</div></div><div class="hdr-r"><div class="hdr-date" id="metaDate"></div><button class="sync" onclick="loadAll()">↻ Sync All</button></div></div>
-  <div id="sBar" style="display:none"></div>
-  <div class="sg">
-    <div class="sc yl"><div class="sl">Tasks Today</div><div class="sn" id="h1">-</div><div class="ss" id="h1s">loading</div><div class="si">📋</div></div>
-    <div class="sc pk"><div class="sl">Done Today</div><div class="sn" id="h2">-</div><div class="ss" id="h2s">loading</div><div class="si">✓</div></div>
-    <div class="sc lv"><div class="sl">Active Projects</div><div class="sn" id="h3">-</div><div class="ss">in progress</div><div class="si">🚧</div></div>
-    <div class="sc sg2"><div class="sl">Logs Today</div><div class="sn" id="h4">-</div><div class="ss">entries</div><div class="si">📝</div></div>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div>
+    <div class="gr" id="greeting">Good morning, <span>Rae.</span></div>
+    <div class="hdr-sub" id="hdrSub">Loading your workspace…</div>
   </div>
-  <div class="og">
-    <div class="pn"><div class="ph"><div class="pt">◈ Today's Tasks</div></div><div class="pd" id="mTasks"><div class="em">Loading…</div></div></div>
-    <div class="pn"><div class="ph"><div class="pt">◎ Daily Recap</div></div><div class="pd" id="mRecap"><div class="em">Loading…</div></div></div>
-    <div class="pn"><div class="ph"><div class="pt">≡ Active Projects</div></div><div class="pd" id="mProj"><div class="em">Loading…</div></div></div>
-    <div class="pn"><div class="ph"><div class="pt">◻ Recent Notes</div></div><div class="pd" id="mNotes"><div class="em">Loading…</div></div></div>
+  <div class="hdr-r">
+    <div class="hdr-date" id="metaDate"></div>
+    <button class="sync-all" onclick="syncAll()">↻ Sync all</button>
   </div>
 </div>
+
+<div id="sBar" style="display:none"></div>
+
+<!-- WEEK STRIP -->
+<div class="ws" id="weekStrip"></div>
+
+
+<!-- STAT CARDS -->
+<div class="stat-row">
+  <div class="sc yl">
+    <div class="sc-num">01 · Tasks Today</div>
+    <div class="sc-val" id="s1">-</div>
+    <div class="sc-sub" id="s1s">loading</div>
+    <div class="sc-icon">📋</div>
+  </div>
+  <div class="sc pk">
+    <div class="sc-num">02 · Completed</div>
+    <div class="sc-val" id="s2">-</div>
+    <div class="sc-sub" id="s2s">loading</div>
+    <div class="sc-icon">✓</div>
+  </div>
+  <div class="sc lv">
+    <div class="sc-num">03 · Active Projects</div>
+    <div class="sc-val" id="s3">-</div>
+    <div class="sc-sub">in progress</div>
+    <div class="sc-icon">🚧</div>
+  </div>
+  <div class="sc sg">
+    <div class="sc-num">04 · Priority Today</div>
+    <div class="sc-val" id="s4">-</div>
+    <div class="sc-sub">needs attention</div>
+    <div class="sc-icon">⚡</div>
+  </div>
+</div>
+
+<!-- TOP ROW: 3 columns -->
+<div class="top-row">
+
+  <!-- TASK PLANNER -->
+  <div class="pn">
+    <div class="ph">
+      <div class="pt">◈ Task Planner</div>
+      <div class="pa">
+        <button class="pb act" id="btT" onclick="sf('today')">Today</button>
+        <button class="pb" id="btA" onclick="sf('all')">All</button>
+        <button class="pb" onclick="loadTasks()">↻</button>
+      </div>
+    </div>
+    <div class="pd">
+      <div class="ar">
+        <input class="ip" id="tInp" placeholder="Add a task…" maxlength="200">
+        <select class="se" id="tPri">
+          <option value="">— Priority</option>
+          <option value="Priority today">🔴 Today</option>
+          <option value="Priority this week">🟡 Week</option>
+        </select>
+        <button class="ab" id="tBtn" onclick="addTask()">+</button>
+      </div>
+      <div class="tl" id="taskList"><div class="em">Loading…</div></div>
+      <div class="prog-wrap" id="tProg" style="display:none">
+        <div class="prog-top"><span>Progress</span><span id="tPL">0%</span></div>
+        <div class="prog-track"><div class="prog-fill" id="tPF" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAILY NOTES -->
+  <div class="pn">
+    <div class="ph">
+      <div class="pt">◻ Daily Notes</div>
+      <div class="pa" style="font-size:10px;color:var(--muted);font-weight:500" id="saveLabel">saved</div>
+    </div>
+    <div class="pd">
+      <textarea class="notes-area" id="notesArea" placeholder="Brain dump — reminders, ideas, follow-ups, anything on your mind…"></textarea>
+      <div class="notes-foot">
+        <div class="notes-count" id="notesCount">0 words</div>
+        <button class="clear-btn" onclick="clearNotes()">✕ Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAILY RECAP -->
+  <div class="pn">
+    <div class="ph">
+      <div class="pt">◎ Daily Recap</div>
+      <div class="pa">
+        <button class="pb act" id="brT" onclick="srf('today')">Today</button>
+        <button class="pb" id="brA" onclick="srf('all')">Recent</button>
+        <button class="pb" onclick="loadRecaps()">↻</button>
+      </div>
+    </div>
+    <div class="pd">
+      <div class="rf">
+        <div>
+          <div class="rl">✅ What's done</div>
+          <textarea class="ri" id="rDone" rows="2" placeholder="What did you accomplish?"></textarea>
+        </div>
+        <div>
+          <div class="rl">➡️ What's next</div>
+          <textarea class="ri" id="rNext" rows="2" placeholder="What's coming up?"></textarea>
+        </div>
+        <div class="rb">
+          <select class="se" id="rProj" style="max-width:150px"><option value="">Select project</option></select>
+          <button class="ab ab-w" id="rBtn" onclick="addRecap()">+ Log</button>
+        </div>
+      </div>
+      <div id="recapList" style="max-height:260px;overflow-y:auto"><div class="em">Loading…</div></div>
+    </div>
+  </div>
+
+</div><!-- /top-row -->
+
+<!-- BOTTOM ROW: Project Tasks full width -->
+<div class="bot-row">
+  <div class="pn">
+    <div class="ph">
+      <div class="pt">≡ Project Tasks</div>
+      <div class="pa">
+        <span id="projContentMeta" style="font-size:10px;color:var(--muted);font-weight:500"></span>
+        <button class="pb" onclick="loadTasks()">↻</button>
+      </div>
+    </div>
+    <div class="proj-panel">
+
+      <!-- PROJECT SIDEBAR -->
+      <div class="proj-sidebar" id="projSidebar">
+        <div class="em">Loading…</div>
+      </div>
+
+      <!-- PROJECT TASK CONTENT -->
+      <div class="proj-content" id="projContent">
+        <div class="proj-content-hdr">
+          <div class="proj-content-title" id="projContentTitle">Select a project</div>
+          <div class="proj-content-meta" id="projContentMeta2">← Choose from the list</div>
+        </div>
+        <div class="proj-add-row" id="projAddRow" style="display:none">
+          <input class="ip" id="pjInp" placeholder="Add task to this project…" maxlength="200">
+          <select class="se" id="pjPri">
+            <option value="">— Priority</option>
+            <option value="Priority today">🔴 Today</option>
+            <option value="Priority this week">🟡 Week</option>
+          </select>
+          <button class="ab" id="pjBtn" onclick="addProjTask()">+</button>
+        </div>
+        <div class="proj-task-list" id="projTaskList">
+          <div class="em" style="margin-top:40px">Select a project to see its tasks</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <script>
 const W='https://ppc-taskplanner.rachel-f0b.workers.dev';
-const DB_T='30634595b2aa807fbe6aeddda8aa124a',DB_L='35e34595b2aa80828a81dada51401d22',DB_P='35934595b2aa8034a4eed7794f61ad8d',DB_N='35934595b2aa8021a54af97806049a38';
-let tasks=[],recaps=[],projects=[],notes=[];
+const DB_T='30634595b2aa807fbe6aeddda8aa124a';
+const DB_L='35e34595b2aa80828a81dada51401d22';
+const DB_P='35934595b2aa8034a4eed7794f61ad8d';
+const NOTES_KEY='ppc_quicknotes_v1';
+
+let tasks=[],recaps=[],projects=[],projPropName=null;
+let fMode='today',rMode='today',selDate=toYMD(new Date());
+let selProjectId=null,notesTimer;
+
+// ── UTILS ──
 function toYMD(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function dD(y){if(!y)return'';const t=toYMD(new Date()),x=toYMD(new Date(Date.now()-864e5));if(y===t)return'Today';if(y===x)return'Yesterday';return new Date(y+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function dD(y){if(!y)return'';const t=toYMD(new Date());if(y===t)return'Today';return new Date(y+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})}
-function ss(m,t){const b=document.getElementById('sBar');b.className='sb sb-'+t;b.textContent=m;b.style.display='flex';if(t!=='err')setTimeout(()=>b.style.display='none',3000)}
-function ago(iso){const d=new Date(iso),now=new Date(),m=Math.floor((now-d)/60000);if(m<60)return m+'m';const h=Math.floor(m/60);if(h<24)return h+'h';return Math.floor(h/24)+'d'}
-function initUI(){const n=new Date(),h=n.getHours(),g=h<12?'Good morning':h<17?'Good afternoon':'Good evening';
-document.getElementById('greeting').innerHTML=`${g}, <span>Rae.</span>`;
-const ds=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],ms=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-document.getElementById('metaDate').textContent=`${ds[n.getDay()]}, ${ms[n.getMonth()]} ${n.getDate()}`}
-async function q(db,body={}){const r=await fetch(`${W}/query/${db}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});return r.json()}
-function pn(id){const c=id.replaceAll('-','');const p=projects.find(x=>x.id.replaceAll('-','')=== c);return p?p.name:''}
 
-async function loadAll(){ss('Syncing all…','info');try{
-const[t,l,p,n]=await Promise.all([q(DB_T,{page_size:100}),q(DB_L,{page_size:30,sorts:[{property:'Date',direction:'descending'}]}),q(DB_P,{page_size:50}),q(DB_N,{page_size:30,sorts:[{property:'Last edited time',direction:'descending'}]})]);
-tasks=(t.results||[]).map(x=>{const r=x.properties||{};return{id:x.id,title:r['Task']?.title?.[0]?.plain_text||'Untitled',status:r['Status']?.status?.name||'Not started',priority:r['Priority Type']?.select?.name||'',doDate:r['Do Date']?.date?.start||null}});
-recaps=(l.results||[]).map(x=>{const r=x.properties||{};return{done:r["What's done?"]?.title?.[0]?.plain_text||'',next:r["What's next?"]?.rich_text?.[0]?.plain_text||'',date:r['Date']?.date?.start||null,projIds:(r["🚧 Projects "]?.relation||[]).map(y=>y.id)}});
-projects=(p.results||[]).map(x=>({id:x.id,name:x.properties?.['Name']?.title?.[0]?.plain_text||'Untitled',status:x.properties?.['Status']?.status?.name||''}));
-notes=(n.results||[]).map(x=>{const r=x.properties||{};return{title:r['Page']?.title?.[0]?.plain_text||'Untitled',types:(r['Type']?.multi_select||[]).map(y=>y.name),edited:r['Last edited time']?.last_edited_time||''}});
-render();ss('All synced ✓','ok');document.getElementById('topSub').textContent=`${tasks.length} tasks · ${projects.filter(x=>x.status==='In progress').length} projects · ${notes.length} notes`}catch(e){ss('Error loading.','err')}}
+// ── UI INIT ──
+function initUI(){
+  const n=new Date(),h=n.getHours(),g=h<12?'Good morning':h<17?'Good afternoon':'Good evening';
+  document.getElementById('greeting').innerHTML=`${g}, <span>Rae.</span>`;
+  const ds=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const ms=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('metaDate').textContent=`${ds[n.getDay()]}, ${ms[n.getMonth()]} ${n.getDate()}`;
+  buildWeek(n);
+  loadNotes();
+}
 
-function render(){const tdy=toYMD(new Date());
-const tdyT=tasks.filter(x=>x.doDate===tdy),tdyD=tdyT.filter(x=>x.status==='Done'),actP=projects.filter(x=>x.status==='In progress'),tdyL=recaps.filter(x=>x.date===tdy);
-document.getElementById('h1').textContent=tdyT.length;document.getElementById('h1s').textContent=tdyT.length?`${tdyT.length-tdyD.length} remaining`:'none';
-document.getElementById('h2').textContent=tdyD.length;document.getElementById('h2s').textContent=tdyD.length===tdyT.length&&tdyT.length?'all done! 🎉':`of ${tdyT.length}`;
-document.getElementById('h3').textContent=actP.length;document.getElementById('h4').textContent=tdyL.length;
+function buildWeek(now){
+  const s=document.getElementById('weekStrip'),dn=['Su','Mo','Tu','We','Th','Fr','Sa'],st=new Date(now);
+  st.setDate(now.getDate()-now.getDay());const ty=toYMD(now);s.innerHTML='';
+  for(let i=0;i<7;i++){const d=new Date(st);d.setDate(st.getDate()+i);
+    const y=toYMD(d),isT=y===ty,isS=y===selDate;
+    const c=document.createElement('div');c.className='wd'+(isT?' td':'')+(isS&&!isT?' sl':'');
+    c.innerHTML=`<div class="wl">${dn[i]}</div><div class="wn">${d.getDate()}</div>`;
+    c.onclick=()=>{selDate=y;buildWeek(now);renderTasks();renderRecaps()};
+    s.appendChild(c);
+  }
+}
 
-// Tasks
-const mt=tdyT.slice(0,6);document.getElementById('mTasks').innerHTML=mt.length?mt.map(x=>{const dn=x.status==='Done';
-const st=dn?'<span class="tg tg-d">Done</span>':x.priority==='Priority today'?'<span class="tg tg-t">Priority</span>':'<span class="tg tg-o">To do</span>';
-return `<div class="tw"><div class="cb-s ${dn?'dn':''}"></div><div class="tx-s ${dn?'dn':''}">${esc(x.title)}</div>${st}</div>`}).join(''):'<div class="em">No tasks today</div>';
+// ── STATUS ──
+function showS(m,t){const b=document.getElementById('sBar');b.className='sb sb-'+t;b.textContent=m;b.style.display='flex';if(t!=='err')setTimeout(()=>b.style.display='none',3000)}
 
-// Recaps
-document.getElementById('mRecap').innerHTML=tdyL.length?tdyL.slice(0,3).map(x=>{const pt=x.projIds.map(id=>{const n=pn(id);return n?`<span class="tg tg-j">${esc(n)}</span>`:''}).join('');
-return `<div class="le-s"><div class="ll-s">✅ Done</div><div class="lt-s">${esc(x.done||'(empty)')}</div>${pt?`<div style="margin-top:6px">${pt}</div>`:''}</div>`}).join(''):'<div class="em">No recaps today</div>';
+// ── API ──
+async function qry(db,body={}){const r=await fetch(`${W}/query/${db}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});return r.json()}
+async function crt(body){const r=await fetch(`${W}/pages`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});return r.json()}
+async function upd(id,body){const r=await fetch(`${W}/pages/${id.replaceAll('-','')}`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});return r.json()}
 
-// Projects
-document.getElementById('mProj').innerHTML=actP.length?actP.map(x=>
-`<div class="ne-s"><span style="font-size:14px">🚧</span><div class="tx-s">${esc(x.name)}</div><span class="tg tg-p">Active</span></div>`).join(''):'<div class="em">No active projects</div>';
+// ── SCHEMA (for dynamic property name) ──
+async function loadSchema(){
+  try{
+    const r=await fetch(`${W}/schema/${DB_L}`);const d=await r.json();
+    const props=d.properties||{};
+    for(const[name,prop]of Object.entries(props)){if(prop.type==='relation'){projPropName=name;break;}}
+  }catch(e){}
+}
 
-// Notes
-document.getElementById('mNotes').innerHTML=notes.length?notes.slice(0,5).map(x=>{const tTags=x.types.slice(0,1).map(t=>`<span class="tg tg-n">${t}</span>`).join('');const a=x.edited?ago(x.edited):'';
-return `<div class="ne-s"><span style="font-size:14px">📄</span><div style="flex:1;min-width:0"><div class="tx-s">${esc(x.title)}</div></div>${tTags}<span style="font-size:10px;color:var(--muted)">${a}</span></div>`}).join(''):'<div class="em">No notes</div>'}
+// ── PROJECTS ──
+async function loadProjects(){
+  try{
+    const d=await qry(DB_P,{page_size:50});
+    projects=(d.results||[]).map(p=>({
+      id:p.id,
+      name:p.properties?.['Name']?.title?.[0]?.plain_text||'Untitled',
+      status:p.properties?.['Status']?.status?.name||'Not started'
+    }));
+    // Recap project dropdown
+    const s=document.getElementById('rProj');
+    s.innerHTML='<option value="">Select project</option>';
+    projects.filter(p=>p.status!=='Done').forEach(p=>{
+      s.innerHTML+=`<option value="${p.id}">${esc(p.name)}</option>`;
+    });
+    renderProjSidebar();
+  }catch(e){}
+}
 
-initUI();loadAll();
+function projName(id){
+  const c=id.replaceAll('-','');
+  const p=projects.find(x=>x.id.replaceAll('-','')=== c);
+  return p?p.name:'';
+}
+
+// ── RENDER PROJECT SIDEBAR ──
+function renderProjSidebar(){
+  const sb=document.getElementById('projSidebar');
+  const active=projects.filter(p=>p.status!=='Done');
+  if(!active.length){sb.innerHTML='<div class="proj-empty">No active projects</div>';return}
+
+  sb.innerHTML=active.map(p=>{
+    const taskCount=tasks.filter(t=>t.projIds.some(id=>id.replaceAll('-','')=== p.id.replaceAll('-',''))&&t.status!=='Done').length;
+    const dotClass=p.status==='In progress'?'dot-active':p.status==='Not started'?'dot-ns':'dot-bl';
+    const isActive=selProjectId===p.id;
+    return `<div class="proj-item ${isActive?'active':''}" onclick="selectProject('${p.id}')">
+      <div class="proj-dot ${dotClass}"></div>
+      <div class="proj-name">${esc(p.name)}</div>
+      ${taskCount>0?`<div class="proj-count">${taskCount}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+// ── SELECT PROJECT ──
+function selectProject(id){
+  selProjectId=id;
+  renderProjSidebar();
+  renderProjTasks();
+  document.getElementById('projAddRow').style.display='flex';
+}
+
+// ── RENDER PROJECT TASKS ──
+function renderProjTasks(){
+  const ls=document.getElementById('projTaskList');
+  if(!selProjectId){
+    document.getElementById('projContentTitle').textContent='Select a project';
+    document.getElementById('projContentMeta2').textContent='← Choose from the list';
+    ls.innerHTML='<div class="em" style="margin-top:40px">Select a project to see its tasks</div>';
+    return;
+  }
+  const proj=projects.find(p=>p.id===selProjectId);
+  const projTasks=tasks.filter(t=>t.projIds.some(id=>id.replaceAll('-','')=== selProjectId.replaceAll('-','')));
+  const pending=projTasks.filter(t=>t.status!=='Done'),done=projTasks.filter(t=>t.status==='Done');
+  const pct=projTasks.length?Math.round(done.length/projTasks.length*100):0;
+
+  document.getElementById('projContentTitle').textContent=proj?proj.name:'Project';
+  document.getElementById('projContentMeta2').textContent=`${pending.length} pending · ${done.length} done · ${pct}% complete`;
+
+  if(!projTasks.length){ls.innerHTML='<div class="em">No tasks for this project yet</div>';return}
+
+  ls.innerHTML=[...pending,...done].map(t=>{
+    const dn=t.status==='Done';
+    const pt=t.priority==='Priority today'?'<span class="tg tg-t">Today</span>':t.priority==='Priority this week'?'<span class="tg tg-w">Week</span>':'';
+    const st=dn?'<span class="tg tg-d">Done</span>':t.status==='In progress'?'<span class="tg tg-ip">In progress</span>':'<span class="tg tg-o">To do</span>';
+    const di=t.doDate?`<div class="tn">${dD(t.doDate)}</div>`:'';
+    return `<div class="tw"><div class="cb ${dn?'dn':''}" data-id="${t.id}" data-done="${dn}" onclick="chk(this,true)"></div>
+      <div style="flex:1;min-width:0"><div class="tx ${dn?'dn':''}">${esc(t.title)}</div>${di}</div>
+      <div class="tags">${pt}${st}</div></div>`;
+  }).join('');
+}
+
+// ── ADD PROJECT TASK ──
+async function addProjTask(){
+  if(!selProjectId)return;
+  const i=document.getElementById('pjInp'),p=document.getElementById('pjPri').value,t=i.value.trim();if(!t)return;
+  const b=document.getElementById('pjBtn');b.disabled=true;b.textContent='…';showS('Adding…','info');
+  const pr={
+    'Task':{title:[{text:{content:t}}]},
+    'Status':{status:{name:'Not started'}},
+    'Do Date':{date:{start:selDate}}
+  };
+  if(p)pr['Priority Type']={select:{name:p}};
+  if(projPropName)pr[projPropName]={relation:[{id:selProjectId}]};
+  try{
+    const d=await crt({parent:{database_id:DB_T},properties:pr});
+    if(d.object==='error')throw new Error(d.message);
+    i.value='';showS('Added ✓','ok');await loadTasks();
+  }catch(e){showS('Error: '+e.message,'err')}
+  b.disabled=false;b.textContent='+';
+}
+
+// ── TASKS ──
+function parseT(p){
+  const r=p.properties||{};
+  return{id:p.id,title:r['Task']?.title?.[0]?.plain_text||'Untitled',status:r['Status']?.status?.name||'Not started',
+    priority:r['Priority Type']?.select?.name||'',doDate:r['Do Date']?.date?.start||null,
+    notes:r['Notes']?.rich_text?.[0]?.plain_text||'',
+    projIds:(r['🚧 Projects ']?.relation||[]).map(x=>x.id)}
+}
+
+async function loadTasks(){
+  showS('Syncing tasks…','info');
+  try{
+    const d=await qry(DB_T,{page_size:100});
+    tasks=(d.results||[]).map(parseT);
+    renderTasks();renderProjSidebar();if(selProjectId)renderProjTasks();
+    showS('Tasks synced ✓','ok');
+    document.getElementById('hdrSub').textContent=`${tasks.length} tasks · ${projects.filter(p=>p.status==='In progress').length} active projects`;
+  }catch(e){showS('Could not load tasks.','err')}
+}
+
+function sf(m){fMode=m;document.getElementById('btT').classList.toggle('act',m==='today');document.getElementById('btA').classList.toggle('act',m==='all');renderTasks()}
+
+function renderTasks(){
+
+  // Update stat cards
+  const tdy=tasks.filter(x=>x.doDate===toYMD(new Date()));
+  const tdyD=tdy.filter(x=>x.status==='Done');
+  const priT=tasks.filter(x=>x.priority==='Priority today'&&x.status!=='Done');
+  document.getElementById('s1').textContent=tdy.length;
+  document.getElementById('s1s').textContent=tdy.length?(tdy.length-tdyD.length)+' remaining':'nothing yet';
+  document.getElementById('s2').textContent=tdyD.length;
+  document.getElementById('s2s').textContent=tdyD.length===tdy.length&&tdy.length?'all done! 🎉':'of '+tdy.length+' tasks';
+  document.getElementById('s3').textContent=projects.filter(p=>p.status==='In progress').length;
+  document.getElementById('s4').textContent=priT.length;
+
+  const ls=document.getElementById('taskList'),ps=document.getElementById('tProg');
+  let t=tasks;if(fMode==='today')t=tasks.filter(x=>x.doDate===selDate);
+  const p=t.filter(x=>x.status!=='Done'),d=t.filter(x=>x.status==='Done'),a=[...p,...d];
+  if(!a.length){ls.innerHTML=`<div class="em">No tasks ${fMode==='today'?'for '+dD(selDate):''} ☕</div>`;ps.style.display='none';return}
+  ps.style.display='block';
+  const pct=Math.round(d.length/a.length*100);
+  document.getElementById('tPF').style.width=pct+'%';document.getElementById('tPL').textContent=pct+'%';
+  ls.innerHTML=a.map(x=>{
+    const dn=x.status==='Done';
+    const pt=x.priority==='Priority today'?'<span class="tg tg-t">Today</span>':x.priority==='Priority this week'?'<span class="tg tg-w">Week</span>':'';
+    const st=dn?'<span class="tg tg-d">Done</span>':x.status==='In progress'?'<span class="tg tg-ip">IP</span>':'<span class="tg tg-o">To do</span>';
+    const di=fMode==='all'&&x.doDate?`<div class="tn">${dD(x.doDate)}</div>`:'';
+    return `<div class="tw"><div class="cb ${dn?'dn':''}" data-id="${x.id}" data-done="${dn}" onclick="chk(this,false)"></div>
+      <div style="flex:1;min-width:0"><div class="tx ${dn?'dn':''}">${esc(x.title)}</div>${di}</div>
+      <div class="tags">${pt}${st}</div></div>`;
+  }).join('');
+}
+
+async function addTask(){
+  const i=document.getElementById('tInp'),p=document.getElementById('tPri').value,t=i.value.trim();if(!t)return;
+  const b=document.getElementById('tBtn');b.disabled=true;b.textContent='…';showS('Adding…','info');
+  const pr={'Task':{title:[{text:{content:t}}]},'Status':{status:{name:'Not started'}},'Do Date':{date:{start:selDate}}};
+  if(p)pr['Priority Type']={select:{name:p}};
+  try{const d=await crt({parent:{database_id:DB_T},properties:pr});if(d.object==='error')throw new Error(d.message);i.value='';showS('Added ✓','ok');await loadTasks()}catch(e){showS('Error: '+e.message,'err')}
+  b.disabled=false;b.textContent='+';
+}
+
+async function chk(el,isProj){
+  if(el.dataset.done==='true'||el.classList.contains('bz'))return;
+  el.classList.add('bz');showS('Updating…','info');
+  try{
+    const d=await upd(el.dataset.id,{properties:{'Status':{status:{name:'Done'}}}});
+    if(d.object==='error')throw new Error(d.message);
+    showS('Done ✓','ok');await loadTasks();
+  }catch(e){showS('Error','err');el.classList.remove('bz')}
+}
+
+document.getElementById('tInp').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addTask()}});
+document.getElementById('pjInp').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addProjTask()}});
+
+// ── NOTES ──
+function loadNotes(){const v=localStorage.getItem(NOTES_KEY)||'';document.getElementById('notesArea').value=v;updateNotesCount()}
+function saveNotes(){localStorage.setItem(NOTES_KEY,document.getElementById('notesArea').value);document.getElementById('saveLabel').textContent='saved';updateNotesCount()}
+function updateNotesCount(){const v=document.getElementById('notesArea').value;const w=v.trim()?v.trim().split(/\s+/).length:0;document.getElementById('notesCount').textContent=`${w} words`}
+function clearNotes(){if(!document.getElementById('notesArea').value.trim())return;if(confirm('Clear all notes?')){document.getElementById('notesArea').value='';saveNotes()}}
+document.getElementById('notesArea').addEventListener('input',()=>{document.getElementById('saveLabel').textContent='saving…';clearTimeout(notesTimer);notesTimer=setTimeout(saveNotes,800);updateNotesCount()});
+document.getElementById('notesArea').addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();const s=e.target,st=s.selectionStart;s.value=s.value.substring(0,st)+'    '+s.value.substring(s.selectionEnd);s.selectionStart=s.selectionEnd=st+4}});
+
+// ── RECAPS ──
+function parseR(p){const r=p.properties||{};return{id:p.id,done:r["What's done?"]?.title?.[0]?.plain_text||'',next:r["What's next?"]?.rich_text?.[0]?.plain_text||'',date:r['Date']?.date?.start||null,projIds:(r['🚧 Projects ']?.relation||[]).map(x=>x.id)}}
+
+async function loadRecaps(){
+  showS('Syncing recaps…','info');
+  try{const d=await qry(DB_L,{page_size:50,sorts:[{property:'Date',direction:'descending'}]});recaps=(d.results||[]).map(parseR);renderRecaps();showS('Recaps synced ✓','ok')}
+  catch(e){showS('Could not load recaps.','err')}
+}
+
+function srf(m){rMode=m;document.getElementById('brT').classList.toggle('act',m==='today');document.getElementById('brA').classList.toggle('act',m==='all');renderRecaps()}
+
+function renderRecaps(){
+  const ls=document.getElementById('recapList');
+  let r=recaps;if(rMode==='today')r=recaps.filter(x=>x.date===selDate);
+  if(!r.length){ls.innerHTML=`<div class="em">No recaps ${rMode==='today'?'for '+dD(selDate):''} ☕</div>`;return}
+  ls.innerHTML=r.map(x=>{
+    const pt=x.projIds.map(id=>{const n=projName(id);return n?`<span class="tg-j">${esc(n)}</span>`:''}).join('');
+    const dt=rMode==='all'&&x.date?`<span class="tg-date">${dD(x.date)}</span>`:'';
+    return `<div class="le">${x.done?`<div class="ll ll-d">✅ Done</div><div class="lt">${esc(x.done)}</div>`:''}${x.next?`<div class="ll ll-n">➡️ Next</div><div class="lt">${esc(x.next)}</div>`:''}<div class="lm">${pt}${dt}</div></div>`;
+  }).join('');
+}
+
+async function addRecap(){
+  const dE=document.getElementById('rDone'),nE=document.getElementById('rNext'),pId=document.getElementById('rProj').value;
+  const dT=dE.value.trim(),nT=nE.value.trim();if(!dT&&!nT)return;
+  const b=document.getElementById('rBtn');b.disabled=true;b.textContent='…';showS('Logging…','info');
+  const pr={"What's done?":{title:[{text:{content:dT||'(no update)'}}]},'Date':{date:{start:selDate}}};
+  if(nT)pr["What's next?"]={rich_text:[{text:{content:nT}}]};
+  if(pId&&projPropName)pr[projPropName]={relation:[{id:pId}]};
+  try{const d=await crt({parent:{database_id:DB_L},properties:pr});if(d.object==='error')throw new Error(d.message);dE.value='';nE.value='';showS('Logged ✓','ok');await loadRecaps()}
+  catch(e){showS('Error: '+e.message,'err')}
+  b.disabled=false;b.textContent='+ Log';
+}
+
+// ── SYNC ALL ──
+async function syncAll(){
+  showS('Syncing everything…','info');
+  await Promise.all([loadTasks(),loadRecaps()]);
+  showS('All synced ✓','ok');
+}
+
+// ── INIT ──
+initUI();
+(async()=>{
+  await Promise.all([loadProjects(),loadSchema()]);
+  loadTasks();
+  loadRecaps();
+})();
 </script>
 </body>
 </html>
