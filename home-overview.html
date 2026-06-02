@@ -38,8 +38,6 @@ body{background:var(--bg);font-family:var(--f);color:var(--text);padding:18px 20
 /* TOP ROW — 3 equal columns */
 .top-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;align-items:start}
 
-/* BOTTOM ROW — full width */
-.bot-row{width:100%}
 
 /* PANEL */
 .pn{background:var(--card);border-radius:var(--r);overflow:hidden;box-shadow:0 2px 10px rgba(30,28,24,.07)}
@@ -74,8 +72,6 @@ body{background:var(--bg);font-family:var(--f);color:var(--text);padding:18px 20
 /* PROGRESS */
 .prog-wrap{margin-top:10px;padding-top:10px;border-top:1px solid var(--bdr)}
 .prog-top{display:flex;justify-content:space-between;font-size:10px;font-weight:600;color:var(--muted);margin-bottom:5px}
-.prog-track{height:5px;background:var(--bg);border-radius:10px;overflow:hidden}
-.prog-fill{height:100%;background:var(--sage);border-radius:10px;transition:width .4s ease}
 
 .em{text-align:center;padding:16px 0;font-size:12px;color:var(--muted)}
 
@@ -97,27 +93,6 @@ body{background:var(--bg);font-family:var(--f);color:var(--text);padding:18px 20
 .lm{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
 .tg-j{background:#E0E8F4;color:#405880;font-size:9px;font-weight:700;padding:2px 7px;border-radius:12px;white-space:nowrap}
 .tg-date{background:#F0ECE4;color:rgba(30,28,24,.45);font-size:9px;font-weight:700;padding:2px 7px;border-radius:12px}
-
-/* PROJECT TASKS PANEL */
-.proj-panel{display:grid;grid-template-columns:220px 1fr;min-height:280px}
-.proj-sidebar{border-right:1px solid var(--bdr);padding:12px 10px;display:flex;flex-direction:column;gap:4px;overflow-y:auto;max-height:420px}
-.proj-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;cursor:pointer;transition:all .15s;border:1.5px solid transparent}
-.proj-item:hover{background:var(--bg)}
-.proj-item.active{background:var(--side);border-color:var(--side)}
-.proj-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.dot-active{background:var(--sage)}.dot-ns{background:var(--yellow)}.dot-bl{background:rgba(30,28,24,.2)}
-.proj-name{font-size:12px;font-weight:600;color:var(--text);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.3}
-.proj-item.active .proj-name{color:#fff}
-.proj-count{font-size:10px;font-weight:700;color:var(--muted);flex-shrink:0;background:rgba(30,28,24,.08);padding:2px 7px;border-radius:10px}
-.proj-item.active .proj-count{background:rgba(255,255,255,.15);color:rgba(255,255,255,.7)}
-.proj-empty{font-size:12px;color:var(--muted);padding:12px 10px;text-align:center}
-
-.proj-content{padding:14px 16px;display:flex;flex-direction:column;min-height:280px}
-.proj-content-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--bdr)}
-.proj-content-title{font-size:14px;font-weight:700;color:var(--text)}
-.proj-content-meta{font-size:11px;color:var(--muted)}
-.proj-task-list{flex:1;display:flex;flex-direction:column;gap:4px;overflow-y:auto;max-height:340px}
-.proj-add-row{display:flex;gap:6px;align-items:center;margin-bottom:12px;background:var(--bg);padding:6px 8px;border-radius:10px}
 
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:rgba(30,28,24,.1);border-radius:4px}
 
@@ -256,47 +231,6 @@ body{background:var(--bg);font-family:var(--f);color:var(--text);padding:18px 20
 
 </div><!-- /top-row -->
 
-<!-- BOTTOM ROW: Project Tasks full width -->
-<div class="bot-row">
-  <div class="pn">
-    <div class="ph">
-      <div class="pt">≡ Project Tasks</div>
-      <div class="pa">
-        <span id="projContentMeta" style="font-size:10px;color:var(--muted);font-weight:500"></span>
-        <button class="pb" onclick="loadTasks()">↻</button>
-      </div>
-    </div>
-    <div class="proj-panel">
-
-      <!-- PROJECT SIDEBAR -->
-      <div class="proj-sidebar" id="projSidebar">
-        <div class="em">Loading…</div>
-      </div>
-
-      <!-- PROJECT TASK CONTENT -->
-      <div class="proj-content" id="projContent">
-        <div class="proj-content-hdr">
-          <div class="proj-content-title" id="projContentTitle">Select a project</div>
-          <div class="proj-content-meta" id="projContentMeta2">← Choose from the list</div>
-        </div>
-        <div class="proj-add-row" id="projAddRow" style="display:none">
-          <input class="ip" id="pjInp" placeholder="Add task to this project…" maxlength="200">
-          <select class="se" id="pjPri">
-            <option value="">— Priority</option>
-            <option value="Priority today">🔴 Today</option>
-            <option value="Priority this week">🟡 Week</option>
-          </select>
-          <button class="ab" id="pjBtn" onclick="addProjTask()">+</button>
-        </div>
-        <div class="proj-task-list" id="projTaskList">
-          <div class="em" style="margin-top:40px">Select a project to see its tasks</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
 <script>
 const W='https://ppc-taskplanner.rachel-f0b.workers.dev';
 const DB_T='30634595b2aa807fbe6aeddda8aa124a';
@@ -306,7 +240,7 @@ const NOTES_KEY='ppc_quicknotes_v1';
 
 let tasks=[],recaps=[],projects=[],projPropName=null;
 let fMode='today',rMode='today',selDate=toYMD(new Date());
-let selProjectId=null,notesTimer;
+let notesTimer;
 
 // ── UTILS ──
 function toYMD(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
@@ -378,82 +312,6 @@ function projName(id){
   return p?p.name:'';
 }
 
-// ── RENDER PROJECT SIDEBAR ──
-function renderProjSidebar(){
-  const sb=document.getElementById('projSidebar');
-  const active=projects.filter(p=>p.status!=='Done');
-  if(!active.length){sb.innerHTML='<div class="proj-empty">No active projects</div>';return}
-
-  sb.innerHTML=active.map(p=>{
-    const taskCount=tasks.filter(t=>t.projIds.some(id=>id.replaceAll('-','')=== p.id.replaceAll('-',''))&&t.status!=='Done').length;
-    const dotClass=p.status==='In progress'?'dot-active':p.status==='Not started'?'dot-ns':'dot-bl';
-    const isActive=selProjectId===p.id;
-    return `<div class="proj-item ${isActive?'active':''}" onclick="selectProject('${p.id}')">
-      <div class="proj-dot ${dotClass}"></div>
-      <div class="proj-name">${esc(p.name)}</div>
-      ${taskCount>0?`<div class="proj-count">${taskCount}</div>`:''}
-    </div>`;
-  }).join('');
-}
-
-// ── SELECT PROJECT ──
-function selectProject(id){
-  selProjectId=id;
-  renderProjSidebar();
-  renderProjTasks();
-  document.getElementById('projAddRow').style.display='flex';
-}
-
-// ── RENDER PROJECT TASKS ──
-function renderProjTasks(){
-  const ls=document.getElementById('projTaskList');
-  if(!selProjectId){
-    document.getElementById('projContentTitle').textContent='Select a project';
-    document.getElementById('projContentMeta2').textContent='← Choose from the list';
-    ls.innerHTML='<div class="em" style="margin-top:40px">Select a project to see its tasks</div>';
-    return;
-  }
-  const proj=projects.find(p=>p.id===selProjectId);
-  const projTasks=tasks.filter(t=>t.projIds.some(id=>id.replaceAll('-','')=== selProjectId.replaceAll('-','')));
-  const pending=projTasks.filter(t=>t.status!=='Done'),done=projTasks.filter(t=>t.status==='Done');
-  const pct=projTasks.length?Math.round(done.length/projTasks.length*100):0;
-
-  document.getElementById('projContentTitle').textContent=proj?proj.name:'Project';
-  document.getElementById('projContentMeta2').textContent=`${pending.length} pending · ${done.length} done · ${pct}% complete`;
-
-  if(!projTasks.length){ls.innerHTML='<div class="em">No tasks for this project yet</div>';return}
-
-  ls.innerHTML=[...pending,...done].map(t=>{
-    const dn=t.status==='Done';
-    const pt=t.priority==='Priority today'?'<span class="tg tg-t">Today</span>':t.priority==='Priority this week'?'<span class="tg tg-w">Week</span>':'';
-    const st=dn?'<span class="tg tg-d">Done</span>':t.status==='In progress'?'<span class="tg tg-ip">In progress</span>':'<span class="tg tg-o">To do</span>';
-    const di=t.doDate?`<div class="tn">${dD(t.doDate)}</div>`:'';
-    return `<div class="tw"><div class="cb ${dn?'dn':''}" data-id="${t.id}" data-done="${dn}" onclick="chk(this,true)"></div>
-      <div style="flex:1;min-width:0"><div class="tx ${dn?'dn':''}">${esc(t.title)}</div>${di}</div>
-      <div class="tags">${pt}${st}</div></div>`;
-  }).join('');
-}
-
-// ── ADD PROJECT TASK ──
-async function addProjTask(){
-  if(!selProjectId)return;
-  const i=document.getElementById('pjInp'),p=document.getElementById('pjPri').value,t=i.value.trim();if(!t)return;
-  const b=document.getElementById('pjBtn');b.disabled=true;b.textContent='…';showS('Adding…','info');
-  const pr={
-    'Task':{title:[{text:{content:t}}]},
-    'Status':{status:{name:'Not started'}},
-    'Do Date':{date:{start:selDate}}
-  };
-  if(p)pr['Priority Type']={select:{name:p}};
-  if(projPropName)pr[projPropName]={relation:[{id:selProjectId}]};
-  try{
-    const d=await crt({parent:{database_id:DB_T},properties:pr});
-    if(d.object==='error')throw new Error(d.message);
-    i.value='';showS('Added ✓','ok');await loadTasks();
-  }catch(e){showS('Error: '+e.message,'err')}
-  b.disabled=false;b.textContent='+';
-}
-
 // ── TASKS ──
 function parseT(p){
   const r=p.properties||{};
@@ -468,7 +326,7 @@ async function loadTasks(){
   try{
     const d=await qry(DB_T,{page_size:100});
     tasks=(d.results||[]).map(parseT);
-    renderTasks();renderProjSidebar();if(selProjectId)renderProjTasks();
+    renderTasks();
     showS('Tasks synced ✓','ok');
     document.getElementById('hdrSub').textContent=`${tasks.length} tasks · ${projects.filter(p=>p.status==='In progress').length} active projects`;
   }catch(e){showS('Could not load tasks.','err')}
@@ -527,7 +385,6 @@ async function chk(el,isProj){
 }
 
 document.getElementById('tInp').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addTask()}});
-document.getElementById('pjInp').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addProjTask()}});
 
 // ── NOTES ──
 function loadNotes(){const v=localStorage.getItem(NOTES_KEY)||'';document.getElementById('notesArea').value=v;updateNotesCount()}
