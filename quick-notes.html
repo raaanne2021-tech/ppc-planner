@@ -56,7 +56,7 @@ body{background:var(--bg);font-family:var(--f);color:var(--text);padding:20px 18
 </div>
 <script>
 const W='https://ppc-taskplanner.rachel-f0b.workers.dev',DB_N='35934595b2aa8021a54af97806049a38',DB_P='35934595b2aa8034a4eed7794f61ad8d';
-let notes=[],projects=[];
+let notes=[],projects=[],projPropName=null;
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function toYMD(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function ss(m,t){const b=document.getElementById('sBar');b.className='sb sb-'+t;b.textContent=m;b.style.display='flex';if(t!=='err')setTimeout(()=>b.style.display='none',3000)}
@@ -64,7 +64,8 @@ function ago(iso){const d=new Date(iso),now=new Date(),m=Math.floor((now-d)/6000
 function pn(id){const c=id.replaceAll('-','');const p=projects.find(x=>x.id.replaceAll('-','')=== c);return p?p.name:''}
 function initUI(){const n=new Date(),ds=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],ms=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];document.getElementById('metaDate').textContent=`${ds[n.getDay()]}, ${ms[n.getMonth()]} ${n.getDate()}`}
 async function loadP(){try{const r=await fetch(`${W}/query/${DB_P}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page_size:50})});const d=await r.json();projects=(d.results||[]).map(p=>({id:p.id,name:p.properties?.['Name']?.title?.[0]?.plain_text||'Untitled',status:p.properties?.['Status']?.status?.name||''}));const s=document.getElementById('nProj');s.innerHTML='<option value="">Project</option>';projects.filter(p=>p.status!=='Done').forEach(p=>{s.innerHTML+=`<option value="${p.id}">${esc(p.name)}</option>`})}catch(e){}}
-async function loadN(){ss('Syncing…','info');if(!projects.length)await loadP();try{const r=await fetch(`${W}/query/${DB_N}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page_size:50,sorts:[{property:'Last edited time',direction:'descending'}]})});const d=await r.json();
+async function loadSchema(){try{const r=await fetch(`${W}/schema/${DB_N}`);const d=await r.json();const props=d.properties||{};for(const[name,prop]of Object.entries(props)){if(prop.type==='relation'){projPropName=name;break;}}}catch(e){}}
+async function loadN(){ss('Syncing…','info');if(!projects.length)await loadP();if(!projPropName)await loadSchema();try{const r=await fetch(`${W}/query/${DB_N}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page_size:50,sorts:[{property:'Last edited time',direction:'descending'}]})});const d=await r.json();
 notes=(d.results||[]).map(p=>{const r2=p.properties||{};return{id:p.id,title:r2['Page']?.title?.[0]?.plain_text||'Untitled',types:(r2['Type']?.multi_select||[]).map(x=>x.name),edited:r2['Last edited time']?.last_edited_time||'',projIds:(r2["🚧 Projects "]?.relation||[]).map(x=>x.id)}});
 const fS=document.getElementById('fType'),typs=[...new Set(notes.flatMap(x=>x.types))];fS.innerHTML='<option value="">All types</option>';typs.forEach(t=>{fS.innerHTML+=`<option value="${t}">${t}</option>`});
 render();ss('Synced ✓','ok');document.getElementById('topSub').textContent=`${notes.length} notes total`}catch(e){ss('Could not load.','err')}}
@@ -76,7 +77,7 @@ ls.innerHTML=n.map(x=>{const tTags=x.types.map(t=>`<span class="tg tg-n">${t}</s
 return `<div class="ne"><div style="font-size:16px;flex-shrink:0">📄</div><div style="flex:1;min-width:0"><div class="ne-t">${esc(x.title)}</div><div class="ne-m">${a}</div></div><div class="tags">${tTags}${pTags}</div></div>`}).join('')}
 async function addN(){const i=document.getElementById('nInp'),t=document.getElementById('nType').value,pId=document.getElementById('nProj').value,title=i.value.trim();if(!title)return;
 const b=document.getElementById('nBtn');b.disabled=true;b.textContent='…';ss('Creating…','info');
-const pr={'Page':{title:[{text:{content:title}}]}};if(t)pr['Type']={multi_select:[{name:t}]};if(pId)pr["🚧 Projects "]={relation:[{id:pId}]};
+const pr={'Page':{title:[{text:{content:title}}]}};if(t)pr['Type']={multi_select:[{name:t}]};if(pId&&projPropName)pr[projPropName]={relation:[{id:pId}]};
 try{const r=await fetch(`${W}/pages`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({parent:{database_id:DB_N},properties:pr})});const d=await r.json();if(d.object==='error')throw new Error(d.message);i.value='';ss('Created ✓','ok');await loadN()}catch(e){ss('Error: '+e.message,'err')}b.disabled=false;b.textContent='+'}
 document.getElementById('nInp').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addN()}});
 initUI();loadN();
