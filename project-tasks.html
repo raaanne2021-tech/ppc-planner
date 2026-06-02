@@ -222,7 +222,8 @@ async function loadAll(){
       projIds:(r['🚧 Projects ']?.relation||[]).map(x=>x.id)}});
     projects=(pd.results||[]).map(p=>({id:p.id,
       name:p.properties?.['Name']?.title?.[0]?.plain_text||'Untitled',
-      status:p.properties?.['Status']?.status?.name||'Not started'}));
+      status:p.properties?.['Status']?.status?.name||'Not started',
+      taskIds:(p.properties?.['Project Tasks']?.relation||[]).map(x=>x.id)}));
     updateStats();renderSidebar();
     if(selProjId)renderContent();
     showS('Synced ✓','ok');
@@ -253,7 +254,10 @@ function renderSidebar(){
   active.sort((a,b)=>(statusOrder[a.status]??3)-(statusOrder[b.status]??3));
 
   sb.innerHTML='<div class="sidebar-label">Active Projects</div>'+active.map(p=>{
-    const pTasks=tasks.filter(t=>t.projIds.some(id=>id.replaceAll('-','')=== p.id.replaceAll('-','')));
+    const ptIds=(p.taskIds||[]).map(id=>id.replaceAll('-',''));
+    const pTasks=ptIds.length
+      ? tasks.filter(t=>ptIds.includes(t.id.replaceAll('-','')))
+      : tasks.filter(t=>t.projIds.some(id=>id.replaceAll('-','')=== p.id.replaceAll('-','')));
     const pending=pTasks.filter(t=>t.status!=='Done').length;
     const dotClass=p.status==='In progress'?'dot-ip':p.status==='Not started'?'dot-ns':'dot-bl';
     const isActive=selProjId===p.id;
@@ -287,7 +291,11 @@ function renderContent(){
   if(!selProjId){content.innerHTML='<div class="placeholder"><div class="placeholder-icon">🚧</div><div class="placeholder-text">Select a project from the left<br>to see its tasks</div></div>';return}
 
   const proj=projects.find(p=>p.id===selProjId);
-  const pTasks=tasks.filter(t=>t.projIds.some(id=>id.replaceAll('-','')=== selProjId.replaceAll('-','')));
+  const proj2=projects.find(p=>p.id===selProjId);
+  const pTaskIds=(proj2?.taskIds||[]).map(id=>id.replaceAll('-',''));
+  const pTasks=pTaskIds.length
+    ? tasks.filter(t=>pTaskIds.includes(t.id.replaceAll('-','')))
+    : tasks.filter(t=>t.projIds.some(id=>id.replaceAll('-','')=== selProjId.replaceAll('-','')));
   const pending=pTasks.filter(t=>t.status!=='Done');
   const done=pTasks.filter(t=>t.status==='Done');
   const pct=pTasks.length?Math.round(done.length/pTasks.length*100):0;
